@@ -10,7 +10,7 @@ import lombok.Setter;
 public class LoginShelterRequest {
 
     @NotBlank
-    private String identificacion;
+    private String identification;
 
     @NotBlank
     private String password;

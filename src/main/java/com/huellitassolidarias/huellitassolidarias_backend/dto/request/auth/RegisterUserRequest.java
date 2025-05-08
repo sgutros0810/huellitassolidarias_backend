@@ -12,14 +12,17 @@ import java.time.LocalDate;
 @Setter
 public class RegisterUserRequest {
     @NotBlank
-    private String nombre;
+    private String name;
 
     @NotBlank
-    private String apellidos;
+    private String lastname;
+
+    @NotBlank
+    private String phoneNumber;
 
     @NotBlank
     @Size(min = 4, max = 16)
-    private String nombreUsuario;
+    private String username;
 
     @Email(message = "Por favor, introduzca un email correcto")
     @NotBlank

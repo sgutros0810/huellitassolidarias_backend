@@ -30,14 +30,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             throw new IllegalArgumentException("El email ya esta en uso");
         }
 
-        if (userRepository.existsByNombreUsuario(request.getNombreUsuario())) {
+        if (userRepository.existsByNombreUsuario(request.getUsername())) {
             throw new IllegalArgumentException("Ese nickname ya esta en uso");
         }
 
         Usuario user = Usuario.builder()
-                .nombre(request.getNombre())
-                .apellidos(request.getApellidos())
-                .nombreUsuario(request.getNombreUsuario())
+                .nombre(request.getName())
+                .apellidos(request.getLastname())
+                .nombreUsuario(request.getUsername())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .rol(Role.USUARIO)
