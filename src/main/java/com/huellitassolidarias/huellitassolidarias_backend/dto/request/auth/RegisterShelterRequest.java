@@ -12,27 +12,42 @@ import lombok.Setter;
 @Setter
 public class RegisterShelterRequest {
 
-    @NotBlank
-    @Pattern(
-            regexp = "(^\\d{8}[A-HJ-NP-TV-Z]$)|(^[ABCDEFGHJNPQRSUVW]\\d{7}[0-9A-J]$)\n",
-            message = "El CIF / NIF es incorrecto"
-    )
-    private String identificacion;
+    @NotBlank(message = "El nombre del refugio es obligatorio")
+    private String nameShelter;
 
-    @NotBlank
-    private String nombreEmpresa;
+    @NotBlank(message = "La identificación fiscal es obligatoria")
+//    @Pattern(
+//            regexp = "(^\\d{8}[A-HJ-NP-TV-Z]$)|(^[ABCDEFGHJNPQRSUVW]\\d{7}[0-9A-J]$)",
+//            message = "El CIF / NIF es incorrecto"
+//    )
+    private String identification;
 
-    @NotBlank
-    private String direccionFiscal;
+    @NotBlank(message = "El nombre de usuario del refugio es obligatorio")
+    @Size(min = 4, max = 16, message = "El usuario debe tener entre 4 y 16 caracteres")
+    private String username;
 
-    @NotBlank
-    private String contactoRefugio;
 
+    @NotBlank(message = "La dirección física es obligatoria")
+    private String address;
+
+    private String city;
+
+    private String country;
+
+    @NotBlank(message = "El número de contacto es obligatorio")
+    private String phoneNumber;
+
+    @NotBlank(message = "El email es obligatorio")
     @Email(message = "Por favor, introduzca un email correcto")
-    @NotBlank
     private String email;
 
-    @NotBlank
+    @NotBlank(message = "La contraseña es obligatoria")
+    @Pattern(
+            regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$",
+            message = "La contraseña debe contener al menos 8 caracteres, incluyendo mayúscula, minúscula y número"
+    )
     private String password;
 
+    // Campo opcional
+    private String website_url;
 }

@@ -1,6 +1,7 @@
 package com.huellitassolidarias.huellitassolidarias_backend.security;
 
-import com.huellitassolidarias.huellitassolidarias_backend.entity.Usuario;
+import com.huellitassolidarias.huellitassolidarias_backend.entity.User;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,26 +13,26 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserDetailsAdapter implements UserDetails {
 
-    private final Usuario usuario;
+    private final User user;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_" + usuario.getRol().name()));
+        return List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()));
     }
 
     @Override
     public String getPassword() {
-        return usuario.getPassword();
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return usuario.getEmail();
+        return user.getEmail();
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return usuario.getActivo();
+        return user.getActive();
     }
 
     @Override
@@ -46,6 +47,6 @@ public class UserDetailsAdapter implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return usuario.getActivo();
+        return user.getActive();
     }
 }

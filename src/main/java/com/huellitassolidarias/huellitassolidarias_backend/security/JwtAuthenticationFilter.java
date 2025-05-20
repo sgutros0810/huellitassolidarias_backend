@@ -1,6 +1,6 @@
 package com.huellitassolidarias.huellitassolidarias_backend.security;
 
-import com.huellitassolidarias.huellitassolidarias_backend.service.UsuarioService;
+import com.huellitassolidarias.huellitassolidarias_backend.service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,7 +20,7 @@ import java.io.IOException;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
-    private final UsuarioService userService;
+    private final UserService userService;
 
     @Override
     protected void doFilterInternal(

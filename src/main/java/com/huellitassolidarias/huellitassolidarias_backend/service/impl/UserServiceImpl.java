@@ -1,9 +1,9 @@
 package com.huellitassolidarias.huellitassolidarias_backend.service.impl;
 
-import com.huellitassolidarias.huellitassolidarias_backend.entity.Usuario;
-import com.huellitassolidarias.huellitassolidarias_backend.repository.UsuarioRepository;
+import com.huellitassolidarias.huellitassolidarias_backend.entity.User;
+import com.huellitassolidarias.huellitassolidarias_backend.repository.UserRepository;
 import com.huellitassolidarias.huellitassolidarias_backend.security.UserDetailsAdapter;
-import com.huellitassolidarias.huellitassolidarias_backend.service.UsuarioService;
+import com.huellitassolidarias.huellitassolidarias_backend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,14 +14,19 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class UsuarioServiceImpl implements UsuarioService {
+public class UserServiceImpl implements UserService {
 
-    private final UsuarioRepository userRepository;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public Optional<Usuario> findByEmail(String email) {
+    public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public Optional<User> findByIdentification(String identidication) {
+        return Optional.empty();
     }
 
     @Override
@@ -29,15 +34,19 @@ public class UsuarioServiceImpl implements UsuarioService {
         return userRepository.existsByEmail(email);
     }
 
+    public boolean identificationExists(String identification) {
+        return userRepository.existsByIdentification(identification);
+    }
+
     @Override
-    public Usuario save(Usuario user) {
+    public User save(User user) {
         return userRepository.save(user);
     }
 
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Usuario user = findByEmail(email)
+        User user = findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
         return new UserDetailsAdapter(user);
     }

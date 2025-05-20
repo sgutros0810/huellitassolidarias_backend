@@ -11,28 +11,36 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class RegisterUserRequest {
-    @NotBlank
+
+    @NotBlank(message = "El nombre es obligatorio")
     private String name;
 
-    @NotBlank
+    @NotBlank(message = "El apellido es obligatorio")
     private String lastname;
 
-    @NotBlank
+    @NotBlank(message = "El número de teléfono es obligatorio")
     private String phoneNumber;
 
-    @NotBlank
-    @Size(min = 4, max = 16)
+    @NotBlank(message = "El usuario es obligatorio")
+    @Size(min = 4, max = 16, message = "El usuario debe tener entre 4 y 16 caracteres")
     private String username;
 
+    @NotBlank(message = "La dirección física es obligatoria")
+    private String address;
+
+    private String city;
+
+    private String country;
+
     @Email(message = "Por favor, introduzca un email correcto")
-    @NotBlank
+    @NotBlank(message = "El email es obligatorio")
     private String email;
 
     @Pattern(
             regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$",
             message = "La contraseña debe contener al menos 8 caracteres, incluyendo mayúscula, minúscula y número"
     )
-    @NotBlank
+    @NotBlank(message = "La contraseña es obligatoria")
     private String password;
 
 }

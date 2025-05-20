@@ -8,23 +8,23 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "publicaciones")
-public class Publicacion {
+@Table(name = "publications")
+public class Publication {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Long id;
 
-    private String titulo;
-    private String contenido;
-    private LocalDate fecha;
+    private String title;
+    private String content;
+    private LocalDate date;
 
     // Relaciones
     @ManyToOne
-    @JoinColumn(name = "id_usuario", nullable = false)
-    private Usuario usuario;
+    @JoinColumn(name = "id_user", nullable = false)
+    private User user;
 
-    @OneToMany(mappedBy = "publicacion")
-    private Set<Comentario> comentarios; //Una publicacion puede tener varios comentarios
+    @OneToMany(mappedBy = "publication")
+    private Set<Comment> comment; // Una publicacion puede tener varios comentarios
 
 }

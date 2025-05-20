@@ -1,7 +1,7 @@
 package com.huellitassolidarias.huellitassolidarias_backend.security;
 
 
-import com.huellitassolidarias.huellitassolidarias_backend.entity.Usuario;
+import com.huellitassolidarias.huellitassolidarias_backend.entity.User;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -25,10 +25,10 @@ public class JwtService {
         return Keys.hmacShaKeyFor(secretKey.getBytes());
     }
 
-    public String generateToken(Usuario usuario) {
+    public String generateToken(User usuario) {
         return Jwts.builder()
                 .setSubject(usuario.getEmail())
-                .claim("role", usuario.getRol().name())
+                .claim("role", usuario.getRole().name())
                 .claim("id", usuario.getId())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration))

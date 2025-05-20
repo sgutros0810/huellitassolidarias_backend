@@ -1,15 +1,20 @@
 package com.huellitassolidarias.huellitassolidarias_backend.service.impl;
 
+import com.huellitassolidarias.huellitassolidarias_backend.dto.request.auth.LoginShelterRequest;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.request.auth.LoginUserRequest;
+import com.huellitassolidarias.huellitassolidarias_backend.dto.request.auth.RegisterShelterRequest;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.request.auth.RegisterUserRequest;
+import com.huellitassolidarias.huellitassolidarias_backend.dto.response.auth.LoginShelterResponse;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.response.auth.LoginUserResponse;
+import com.huellitassolidarias.huellitassolidarias_backend.dto.response.auth.RegisterShelterResponse;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.response.auth.RegisterUserResponse;
-import com.huellitassolidarias.huellitassolidarias_backend.entity.Usuario;
+import com.huellitassolidarias.huellitassolidarias_backend.entity.User;
 import com.huellitassolidarias.huellitassolidarias_backend.enums.Role;
-import com.huellitassolidarias.huellitassolidarias_backend.repository.UsuarioRepository;
+import com.huellitassolidarias.huellitassolidarias_backend.repository.UserRepository;
 import com.huellitassolidarias.huellitassolidarias_backend.security.JwtService;
 import com.huellitassolidarias.huellitassolidarias_backend.service.AuthenticationService;
-import com.huellitassolidarias.huellitassolidarias_backend.service.UsuarioService;
+
+import com.huellitassolidarias.huellitassolidarias_backend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,29 +23,32 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
 
-    private final UsuarioService userService;
-
+    private final UserService userService;
     private final PasswordEncoder passwordEncoder;
-    private final UsuarioRepository userRepository;
+    private final UserRepository userRepository;
     private final JwtService jwtService;
 
     @Override
-    public RegisterUserResponse register(RegisterUserRequest request) {
+    public RegisterUserResponse registerUser(RegisterUserRequest request) {
         if (userService.emailExists(request.getEmail())) {
             throw new IllegalArgumentException("El email ya esta en uso");
         }
 
-        if (userRepository.existsByNombreUsuario(request.getUsername())) {
+        if (userRepository.existsByUsername(request.getUsername())) {
             throw new IllegalArgumentException("Ese nickname ya esta en uso");
         }
 
-        Usuario user = Usuario.builder()
-                .nombre(request.getName())
-                .apellidos(request.getLastname())
-                .nombreUsuario(request.getUsername())
+        User user = User.builder()
+                .name(request.getName())
+                .lastname(request.getLastname())
+                .phoneNumber(request.getPhoneNumber())
+                .username(request.getUsername())
+                .address(request.getAddress())
+                .city(request.getCity())
+                .country(request.getCountry())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .rol(Role.USUARIO)
+                .role(Role.USUARIO)
                 .build();
 
         userService.save(user);
@@ -52,9 +60,43 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .build();
     }
 
+
     @Override
-    public LoginUserResponse login(LoginUserRequest request) {
-        Usuario user = userService.findByEmail(request.getEmail())
+    public RegisterShelterResponse registerShelter(RegisterShelterRequest request) {
+        if (userService.identificationExists(request.getIdentification())) {
+            throw new IllegalArgumentException("El identificador ya esta en uso");
+        }
+
+//        if (userRepository.existsByNombreUsuario(request.getIdentificacionFiscal())) {
+//            throw new IllegalArgumentException("Ese nickname ya esta en uso");
+//        }
+
+        User user = User.builder()
+                .nameShelter(request.getNameShelter())
+                .identification(request.getIdentification())
+                .username(request.getUsername())
+                .address(request.getAddress())
+                .city(request.getCity())
+                .country(request.getCountry())
+                .phoneNumber(request.getPhoneNumber())
+                .website_url(request.getWebsite_url())
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .role(Role.REFUGIO)
+                .build();
+
+        userService.save(user);
+
+        String jwtToken = jwtService.generateToken(user);
+
+        return RegisterShelterResponse.builder()
+                .token(jwtToken)
+                .build();
+    }
+
+    @Override
+    public LoginUserResponse loginUser(LoginUserRequest request) {
+        User user = userService.findByEmail(request.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("Credenciales invalidas"));
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
@@ -65,4 +107,16 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return LoginUserResponse.builder().token(token).build();
     }
 
+    @Override
+    public LoginShelterResponse loginShelter(LoginShelterRequest request) {
+        User user = userService.findByIdentification(request.getIdentification())
+                .orElseThrow(() -> new IllegalArgumentException("Credenciales invalidas"));
+
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            throw new IllegalArgumentException("Credenciales invalidas");
+        }
+
+        String token = jwtService.generateToken(user);
+        return LoginShelterResponse.builder().token(token).build();
+    }
 }

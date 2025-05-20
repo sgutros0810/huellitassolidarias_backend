@@ -1,6 +1,5 @@
 package com.huellitassolidarias.huellitassolidarias_backend.security;
 
-import com.huellitassolidarias.huellitassolidarias_backend.repository.UsuarioRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
