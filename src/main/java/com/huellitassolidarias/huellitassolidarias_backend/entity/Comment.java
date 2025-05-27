@@ -23,6 +23,6 @@ public class Comment {
 
     // Relación con Publicacion
     @ManyToOne
-    @JoinColumn(name = "id_publication", nullable = false)
-    private Publication publication;
+    @JoinColumn(name = "id_post", nullable = false)
+    private Post post;
 }

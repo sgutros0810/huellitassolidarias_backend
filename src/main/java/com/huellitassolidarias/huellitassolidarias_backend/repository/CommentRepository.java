@@ -8,5 +8,5 @@ import java.util.List;
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     // Buscar comentarios por publicación
-    List<Comment> findByPublicationId(Long id);
+    List<Comment> findByPostId(Long id);
 }

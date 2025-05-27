@@ -2,14 +2,17 @@ package com.huellitassolidarias.huellitassolidarias_backend.entity;
 
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.time.LocalDate;
-import java.util.List;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
-@Table(name = "publications")
-public class Publication {
+@Table(name = "posts")
+@Getter
+@Setter
+public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
@@ -17,14 +20,15 @@ public class Publication {
 
     private String title;
     private String content;
-    private LocalDate date;
+    private String imageUrl;
+    private LocalDateTime createdAt;
 
     // Relaciones
     @ManyToOne
     @JoinColumn(name = "id_user", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "publication")
+    @OneToMany(mappedBy = "post")
     private Set<Comment> comment; // Una publicacion puede tener varios comentarios
 
 }
