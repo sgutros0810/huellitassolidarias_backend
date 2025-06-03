@@ -1,11 +1,14 @@
 package com.huellitassolidarias.huellitassolidarias_backend.service;
 
+import com.huellitassolidarias.huellitassolidarias_backend.dto.response.post.PostResponse;
 import com.huellitassolidarias.huellitassolidarias_backend.entity.Post;
 import com.huellitassolidarias.huellitassolidarias_backend.entity.User;
+import com.huellitassolidarias.huellitassolidarias_backend.enums.Category;
 import com.huellitassolidarias.huellitassolidarias_backend.repository.PostRepository;
 
 import com.huellitassolidarias.huellitassolidarias_backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,6 +18,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -23,10 +27,8 @@ import java.util.UUID;
 public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
-    private final Path rootLocation = Paths.get("uploads"); // carpeta local para imágenes
 
-
-    public void savePost(String title, String content, MultipartFile image, String email) throws IOException {
+    public void savePost(String title, String content, MultipartFile image, Category category, String email) throws IOException {
         User user = userRepository.findByEmail(email).orElseThrow(()-> new RuntimeException("Usuario no encontrado"));
         String imageUrl = saveImage(image);
         Post post = new Post();
@@ -36,7 +38,7 @@ public class PostService {
         post.setUser(user);
         post.setCreatedAt(LocalDateTime.now());
         post.setImageUrl(imageUrl);
-
+        post.setCategory(category);
         postRepository.save(post);
     }
 
@@ -50,5 +52,14 @@ public class PostService {
 
         return "/uploads/" + fileName;
     }
+
+    public List<Post> getPostsByCategory(Category category) {
+        return postRepository.findByCategory(category);
+    }
+
+    public List<PostResponse> getPostsByUser(Long userId, Pageable pageable) {
+        return postRepository.findAllByUser_Id(userId, pageable).stream().map(PostResponse::new).toList();
+    }
+
 
 }

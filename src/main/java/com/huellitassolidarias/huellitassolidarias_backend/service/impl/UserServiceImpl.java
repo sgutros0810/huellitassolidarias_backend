@@ -1,9 +1,13 @@
 package com.huellitassolidarias.huellitassolidarias_backend.service.impl;
 
+import com.huellitassolidarias.huellitassolidarias_backend.dto.request.user.ShelterProfileRequest;
+import com.huellitassolidarias.huellitassolidarias_backend.dto.request.user.UserProfileRequest;
+import com.huellitassolidarias.huellitassolidarias_backend.dto.response.User.UserProfileResponse;
 import com.huellitassolidarias.huellitassolidarias_backend.entity.User;
 import com.huellitassolidarias.huellitassolidarias_backend.repository.UserRepository;
 import com.huellitassolidarias.huellitassolidarias_backend.security.UserDetailsAdapter;
 import com.huellitassolidarias.huellitassolidarias_backend.service.UserService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -50,42 +54,80 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
         return new UserDetailsAdapter(user);
     }
-//    @Override
-//    @Transactional
-//    public void updateUserProfile(Usuario user, UpdateProfileRequest request) {
-//        if (request.getNickname() != null && !request.getNickname().equals(user.getNickname())) {
-//
-//            if (userRepository.existsByNickname(request.getNickname())) {
-//                throw new IllegalArgumentException("Ese nickname ya esta en uso");
-//            }
-//
-//            if (user.getLastNicknameChange() == null ||
-//                    user.getLastNicknameChange().isBefore(LocalDateTime.now().minusDays(30))) {
-//                user.setNickname(request.getNickname());
-//                user.setLastNicknameChange(LocalDateTime.now());
-//            } else {
-//                throw new IllegalArgumentException("Solo puedes cambiar el nickname una vez cada 30 dias");
-//            }
-//        }
-//
-//        if (request.getHeight() != null) user.setHeight(request.getHeight());
-//        if (request.getWeight() != null) user.setWeight(request.getWeight());
-//        if (request.getGoal() != null) user.setGoal(request.getGoal());
-//        if (request.getActivityLevel() != null) user.setActivityLevel(request.getActivityLevel());
-//        if (request.getBirthDate() != null) user.setBirthDate(request.getBirthDate());
-//
-//        if (request.getAllergenIds() != null) {
-//            List<Allergen> allergens = allergenService.findAllByIds(request.getAllergenIds());
-//            user.setAllergens(Set.copyOf(allergens));
-//        }
-//
-//        if (request.getNewPassword() != null) {
+
+    @Override
+    public UserProfileResponse getUserProfile(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        return UserProfileResponse.builder()
+                .id(user.getId())
+                .profileImageUrl(user.getProfileImageUrl())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .phoneNumber(user.getPhoneNumber())
+                .address(user.getAddress())
+                .city(user.getCity())
+                .country(user.getCountry())
+                .role(user.getRole())
+                .name(user.getName())
+                .lastname(user.getLastname())
+                .nameShelter(user.getNameShelter())
+                .identification(user.getIdentification())
+                .websiteUrl(user.getWebsite_url())
+                .creationDate(user.getCreation_date())
+                .build();
+        }
+
+
+    @Override
+    @Transactional
+    public void updateUserProfile(User user, UserProfileRequest request) {
+
+        if (request.getEmail() != null && !request.getEmail().equals(user.getEmail())) {
+            if(userRepository.existsByEmail(request.getEmail())){
+                throw new IllegalArgumentException("El email ya está en uso");
+            }
+            user.setEmail(request.getEmail());
+        }
+
+        if (request.getPhoneNumber() != null) user.setPhoneNumber(request.getPhoneNumber());
+        if (request.getAddress() != null) user.setAddress(request.getAddress());
+        if (request.getCity() != null) user.setCity(request.getCity());
+        if (request.getCountry() != null) user.setCountry(request.getCountry());
+
+//        if (request.getNewPassword() != null && !request.getNewPassword().isBlank()) {
 //            user.setPassword(passwordEncoder.encode(request.getNewPassword()));
 //        }
-//
-//        userRepository.save(user);
-//    }
 
+        userRepository.save(user);
+    }
+
+
+    @Override
+    @Transactional
+    public void updateShelterProfile(User user, ShelterProfileRequest request) {
+
+        if (request.getEmail() != null && !request.getEmail().equals(user.getEmail())) {
+            if(userRepository.existsByEmail(request.getEmail())){
+                throw new IllegalArgumentException("El email ya está en uso");
+            }
+            user.setEmail(request.getEmail());
+        }
+
+        if(request.getPhoneNumber() != null) user.setPhoneNumber(request.getPhoneNumber());
+        if(request.getAddress() != null) user.setAddress(request.getAddress());
+        if(request.getCity() != null) user.setCity(request.getCity());
+        if(request.getCountry() != null) user.setCountry(request.getCountry());
+
+        if(request.getNameShelter() != null) user.setNameShelter(request.getNameShelter());
+        if(request.getIdentification() != null) user.setIdentification(request.getIdentification());
+        if(request.getWebsiteUrl() != null) user.setWebsite_url(request.getWebsiteUrl());
+//        if (request.getNewPassword() != null && !request.getNewPassword().isBlank()) {
+//            user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+//        }
+        userRepository.save(user);
+    }
 
 
 }

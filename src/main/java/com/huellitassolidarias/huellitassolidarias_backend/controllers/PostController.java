@@ -1,6 +1,9 @@
 package com.huellitassolidarias.huellitassolidarias_backend.controllers;
 
 import com.huellitassolidarias.huellitassolidarias_backend.dto.response.post.PostResponse;
+import com.huellitassolidarias.huellitassolidarias_backend.entity.Post;
+import com.huellitassolidarias.huellitassolidarias_backend.enums.Category;
+import com.huellitassolidarias.huellitassolidarias_backend.mapper.PostMapper;
 import com.huellitassolidarias.huellitassolidarias_backend.repository.PostRepository;
 import com.huellitassolidarias.huellitassolidarias_backend.repository.UserRepository;
 import com.huellitassolidarias.huellitassolidarias_backend.service.PostService;
@@ -31,14 +34,31 @@ public class PostController {
             @RequestParam String title,
             @RequestParam String content,
             @RequestParam(value = "image", required = false) MultipartFile image,
+            @RequestParam Category category,
             Principal principal
     ) throws IOException {
         if (principal == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario no autenticado");
         }
-        postService.savePost(title, content, image, principal.getName());
+        postService.savePost(title, content, image, category, principal.getName());
         return ResponseEntity.ok("Publicacion creada");
     }
+
+
+    @GetMapping("/category/{category}")
+    public ResponseEntity<List<PostResponse>> getPostsByCategory(@PathVariable Category category) {
+        List<Post> posts = postService.getPostsByCategory(category);
+        List<PostResponse> dtos = posts.stream().map(PostMapper::toPostResponse).toList();
+        return ResponseEntity.ok(dtos);
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<PostResponse>> getPostsByUser(@PathVariable Long userId, @RequestParam (defaultValue = "0") int page, @RequestParam (defaultValue = "10")  int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+        List<PostResponse> posts = postService.getPostsByUser(userId, pageable);
+        return ResponseEntity.ok(posts);
+    }
+
 
     @GetMapping
     public ResponseEntity<List <PostResponse>> getAllPosts(
@@ -47,7 +67,6 @@ public class PostController {
     ){
 
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
-
 
         List <PostResponse> posts = postRepository.findAll(pageable).map(PostResponse::new).toList();
 

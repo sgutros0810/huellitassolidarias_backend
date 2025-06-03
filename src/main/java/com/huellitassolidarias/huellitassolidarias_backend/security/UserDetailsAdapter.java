@@ -49,4 +49,8 @@ public class UserDetailsAdapter implements UserDetails {
     public boolean isEnabled() {
         return user.getActive();
     }
+
+    public User getUser() {
+        return user;
+    }
 }

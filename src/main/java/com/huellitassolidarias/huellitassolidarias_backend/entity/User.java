@@ -37,6 +37,9 @@ public class User {
     @Size(min = 4, max = 16)
     private String username;
 
+    @Column(name = "profile_image_url")
+    private String profileImageUrl;
+
     @Column(nullable = false, unique = true)
     @Email(message = "Por favor, introduzca un correo correcto")
     private String email;

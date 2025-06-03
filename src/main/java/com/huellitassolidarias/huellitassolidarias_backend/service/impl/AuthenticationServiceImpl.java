@@ -47,6 +47,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .city(request.getCity())
                 .country(request.getCountry())
                 .email(request.getEmail())
+                .profileImageUrl("/uploads/default-profile.png")
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USUARIO)
                 .build();
@@ -81,6 +82,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .phoneNumber(request.getPhoneNumber())
                 .website_url(request.getWebsite_url())
                 .email(request.getEmail())
+                .profileImageUrl("/uploads/default-profile.png")
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.REFUGIO)
                 .build();

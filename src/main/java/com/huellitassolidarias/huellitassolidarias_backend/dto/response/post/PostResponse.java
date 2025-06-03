@@ -1,6 +1,7 @@
 package com.huellitassolidarias.huellitassolidarias_backend.dto.response.post;
 
 import com.huellitassolidarias.huellitassolidarias_backend.entity.Post;
+import com.huellitassolidarias.huellitassolidarias_backend.enums.Category;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,7 @@ public class PostResponse {
     private String content;
     private LocalDateTime createdAt;
     private String imageUrl;
+    private Category category;
 
     private String username;
 
@@ -28,5 +30,6 @@ public class PostResponse {
         this.createdAt = post.getCreatedAt();
         this.imageUrl = post.getImageUrl();
         this.username = post.getUser().getUsername();
+        this.category = post.getCategory();
     }
 }
