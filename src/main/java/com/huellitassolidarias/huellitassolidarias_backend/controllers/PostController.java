@@ -52,11 +52,36 @@ public class PostController {
         return ResponseEntity.ok(dtos);
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<List<PostResponse>> getPostsByUser(@PathVariable Long userId, @RequestParam (defaultValue = "0") int page, @RequestParam (defaultValue = "10")  int size) {
+//    @GetMapping("/{userId}")
+//    public ResponseEntity<List<PostResponse>> getPostsByUser(@PathVariable Long userId, @RequestParam (defaultValue = "0") int page, @RequestParam (defaultValue = "10")  int size) {
+//        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+//        List<PostResponse> posts = postService.getPostsByUser(userId, pageable);
+//        return ResponseEntity.ok(posts);
+//    }
+
+    @GetMapping("/my-posts")
+    public ResponseEntity<List<PostResponse>> getMyPosts(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            Principal principal) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
-        List<PostResponse> posts = postService.getPostsByUser(userId, pageable);
+        List<PostResponse> posts = postService.getPostsByUserEmail(principal.getName(), pageable);
         return ResponseEntity.ok(posts);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deletePost(@PathVariable Long id, Principal principal) {
+        Post post = postRepository.findById(id).orElse(null);
+        if (post == null) {
+            return ResponseEntity.notFound().build();
+        }
+        if (post.getUser().getId().equals(principal.getName())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario no autenticado");
+        }
+
+        postRepository.delete(post);
+
+        return ResponseEntity.ok("Post eliminado");
     }
 
 
@@ -65,7 +90,6 @@ public class PostController {
         @RequestParam(defaultValue = "0") int page,
         @RequestParam(defaultValue = "10") int size
     ){
-
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
 
         List <PostResponse> posts = postRepository.findAll(pageable).map(PostResponse::new).toList();

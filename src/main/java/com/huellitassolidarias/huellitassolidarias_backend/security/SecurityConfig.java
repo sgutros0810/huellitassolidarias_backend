@@ -28,6 +28,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/auth/**").permitAll() // WHITELIST
                         .requestMatchers(HttpMethod.GET, "/uploads/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/posts/**", "/api/v1/posts").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/posts/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

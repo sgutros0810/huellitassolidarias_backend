@@ -57,9 +57,16 @@ public class PostService {
         return postRepository.findByCategory(category);
     }
 
-    public List<PostResponse> getPostsByUser(Long userId, Pageable pageable) {
-        return postRepository.findAllByUser_Id(userId, pageable).stream().map(PostResponse::new).toList();
+    public List<PostResponse> getPostsByUserEmail(String email, Pageable pageable) {
+        User user  = userRepository.findByEmail(email)
+                .orElseThrow(()-> new RuntimeException("Usuario no encontrado"));
+        return postRepository.findAllByUser_Id(user.getId(), pageable)
+                .stream()
+                .map(PostResponse::new)
+                .toList();
     }
+
+
 
 
 }
