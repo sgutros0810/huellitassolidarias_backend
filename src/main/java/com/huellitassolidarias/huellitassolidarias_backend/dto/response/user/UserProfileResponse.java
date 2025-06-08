@@ -1,4 +1,4 @@
-package com.huellitassolidarias.huellitassolidarias_backend.dto.response.User;
+package com.huellitassolidarias.huellitassolidarias_backend.dto.response.user;
 
 import com.huellitassolidarias.huellitassolidarias_backend.enums.Role;
 import lombok.AllArgsConstructor;

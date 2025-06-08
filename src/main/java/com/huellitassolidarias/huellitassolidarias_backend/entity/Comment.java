@@ -1,11 +1,17 @@
 package com.huellitassolidarias.huellitassolidarias_backend.entity;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "comments")
 public class Comment {
     @Id
@@ -13,8 +19,10 @@ public class Comment {
     @EqualsAndHashCode.Include
     private Long id;
 
-    private String text;
-    private LocalDate date;
+    @Lob
+    private String content;
+
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     //Relaciones
     @ManyToOne

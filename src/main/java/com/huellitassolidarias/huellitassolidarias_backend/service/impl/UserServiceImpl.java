@@ -1,19 +1,24 @@
 package com.huellitassolidarias.huellitassolidarias_backend.service.impl;
 
 import com.huellitassolidarias.huellitassolidarias_backend.dto.request.user.ShelterProfileRequest;
+import com.huellitassolidarias.huellitassolidarias_backend.dto.request.user.SheltersRequest;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.request.user.UserProfileRequest;
-import com.huellitassolidarias.huellitassolidarias_backend.dto.response.User.UserProfileResponse;
+import com.huellitassolidarias.huellitassolidarias_backend.dto.response.user.UserProfileResponse;
 import com.huellitassolidarias.huellitassolidarias_backend.entity.User;
+import com.huellitassolidarias.huellitassolidarias_backend.enums.Role;
 import com.huellitassolidarias.huellitassolidarias_backend.repository.UserRepository;
 import com.huellitassolidarias.huellitassolidarias_backend.security.UserDetailsAdapter;
 import com.huellitassolidarias.huellitassolidarias_backend.service.UserService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -128,6 +133,21 @@ public class UserServiceImpl implements UserService {
 //        }
         userRepository.save(user);
     }
+
+
+//    public Page<SheltersRequest> getAllShelters(Pageable pageable) {
+//        Page<User> sheltersPage = userRepository.findByRole(Role.REFUGIO, pageable);
+//
+//        return sheltersPage.map(user -> SheltersRequest.builder()
+//                .id(user.getId())
+//                .nameShelter(user.getNameShelter())
+//                .identification(user.getIdentification())
+//                .city(user.getCity())
+//                .country(user.getCountry())
+//                .websiteUrl(user.getWebsite_url())
+//                .profileImageUrl(user.getProfileImageUrl())
+//                .build());
+//    }
 
 
 }

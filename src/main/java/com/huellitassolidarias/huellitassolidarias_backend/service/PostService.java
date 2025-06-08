@@ -42,7 +42,6 @@ public class PostService {
         postRepository.save(post);
     }
 
-
     public String saveImage (MultipartFile image) throws IOException {
         String fileName = UUID.randomUUID() + image.getOriginalFilename();
         Path path = Paths.get("uploads/", fileName);
@@ -65,8 +64,4 @@ public class PostService {
                 .map(PostResponse::new)
                 .toList();
     }
-
-
-
-
 }

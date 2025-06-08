@@ -1,9 +1,13 @@
 package com.huellitassolidarias.huellitassolidarias_backend.controllers;
 
 import com.huellitassolidarias.huellitassolidarias_backend.dto.request.user.ShelterProfileRequest;
+import com.huellitassolidarias.huellitassolidarias_backend.dto.request.user.SheltersRequest;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.request.user.UserProfileRequest;
-import com.huellitassolidarias.huellitassolidarias_backend.dto.response.User.UserProfileResponse;
+import com.huellitassolidarias.huellitassolidarias_backend.dto.response.post.PostResponse;
+import com.huellitassolidarias.huellitassolidarias_backend.dto.response.user.SheltersResponse;
+import com.huellitassolidarias.huellitassolidarias_backend.dto.response.user.UserProfileResponse;
 import com.huellitassolidarias.huellitassolidarias_backend.entity.User;
+import com.huellitassolidarias.huellitassolidarias_backend.enums.Role;
 import com.huellitassolidarias.huellitassolidarias_backend.repository.UserRepository;
 import com.huellitassolidarias.huellitassolidarias_backend.security.UserDetailsAdapter;
 import com.huellitassolidarias.huellitassolidarias_backend.service.ImageService;
@@ -11,6 +15,10 @@ import com.huellitassolidarias.huellitassolidarias_backend.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -19,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -64,6 +73,19 @@ public class UserController {
 
         userRepository.save(user);
         return ResponseEntity.ok().body(imageUrl);
+    }
+
+
+    @GetMapping("/shelters")
+    public ResponseEntity<Page<SheltersRequest>> getAllShelters(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<SheltersRequest> shelters = userRepository.findByRole(Role.REFUGIO, pageable)
+                .map(SheltersRequest::new);
+
+        return ResponseEntity.ok(shelters);
     }
 
 }

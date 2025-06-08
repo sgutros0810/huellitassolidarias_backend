@@ -29,6 +29,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/uploads/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/posts/**", "/api/v1/posts").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/posts/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/shelters/**", "/api/v1/shelters").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
