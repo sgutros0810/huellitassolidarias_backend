@@ -51,7 +51,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USUARIO)
                 .build();
-
         userService.save(user);
 
         String jwtToken = jwtService.generateToken(user);
@@ -111,8 +110,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public LoginShelterResponse loginShelter(LoginShelterRequest request) {
+//        System.out.println("IMPRIMIR --->" + request.getIdentification());
+//        System.out.println("IMPRIMIR --->" + request.getPassword());
+
         User user = userService.findByIdentification(request.getIdentification())
                 .orElseThrow(() -> new IllegalArgumentException("Credenciales invalidas"));
+
+//        System.out.println("IMPRIMIR --->" + passwordEncoder.matches(request.getPassword(), user.getPassword()));
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new IllegalArgumentException("Credenciales invalidas");

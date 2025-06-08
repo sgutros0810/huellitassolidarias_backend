@@ -88,13 +88,7 @@ public class User {
     private String website_url;
 
 
-
-
-
     // -------------- Relaciones --------------
-    @OneToMany(mappedBy = "adopter")
-    private Set<Adoption> adoptions; // Un usuario puede tener varias adopciones como adoptante
-
-    @OneToMany(mappedBy = "shelter")
-    private Set<Adoption> adoptionsShelter; // Un usuario puede tener varias adopciones como refugio
+    @OneToMany(mappedBy = "user")
+    private Set<Adoption> adoptions;
 }

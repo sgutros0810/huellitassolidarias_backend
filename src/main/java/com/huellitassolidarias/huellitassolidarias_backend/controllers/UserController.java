@@ -3,7 +3,9 @@ package com.huellitassolidarias.huellitassolidarias_backend.controllers;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.request.user.ShelterProfileRequest;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.request.user.SheltersRequest;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.request.user.UserProfileRequest;
+import com.huellitassolidarias.huellitassolidarias_backend.dto.response.comment.CommentResponse;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.response.post.PostResponse;
+import com.huellitassolidarias.huellitassolidarias_backend.dto.response.user.ShelterDetailResponse;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.response.user.SheltersResponse;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.response.user.UserProfileResponse;
 import com.huellitassolidarias.huellitassolidarias_backend.entity.User;
@@ -86,6 +88,17 @@ public class UserController {
                 .map(SheltersRequest::new);
 
         return ResponseEntity.ok(shelters);
+    }
+
+
+    // Detalles de un refugio
+    @GetMapping("/shelters/details/{shelterId}")
+    public ResponseEntity<ShelterDetailResponse> getShelterDetails(@PathVariable Long shelterId) {
+        return userRepository.findById(shelterId)
+                .filter(user -> user.getRole() == Role.REFUGIO)
+                .map(ShelterDetailResponse::new)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
 }

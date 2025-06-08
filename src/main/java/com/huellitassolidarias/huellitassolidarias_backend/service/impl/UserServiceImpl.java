@@ -135,6 +135,9 @@ public class UserServiceImpl implements UserService {
     }
 
 
+
+
+
 //    public Page<SheltersRequest> getAllShelters(Pageable pageable) {
 //        Page<User> sheltersPage = userRepository.findByRole(Role.REFUGIO, pageable);
 //

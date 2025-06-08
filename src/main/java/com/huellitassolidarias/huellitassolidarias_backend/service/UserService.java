@@ -22,13 +22,11 @@ public interface UserService extends UserDetailsService {
     User save(User user);
     UserProfileResponse getUserProfile(String email);
 
-
     @Transactional
     void updateUserProfile(User user, UserProfileRequest request);
 
     @Transactional
     void updateShelterProfile(User user, ShelterProfileRequest request);
-
 
     //Page<SheltersRequest> getAllShelters(Pageable pageable);
 

@@ -1,11 +1,19 @@
 package com.huellitassolidarias.huellitassolidarias_backend.entity;
 
+import com.huellitassolidarias.huellitassolidarias_backend.enums.Species;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.LocalDateTime;
 
 
 @Entity
 @Table(name = "adoptions")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Adoption {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,11 +23,11 @@ public class Adoption {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private String species;
+    @Enumerated(EnumType.STRING)
+    private Species species;
 
     @Column
-    private String race;
+    private String breed;
 
     @Column
     private Integer age;
@@ -36,13 +44,14 @@ public class Adoption {
     @Column
     private Boolean forAdoption = true;
 
-    // Relación con Refugio
-    @ManyToOne
-    @JoinColumn(name = "id_shelter")
-    private User shelter; // Un refugio es un Usuario con rol REFUGIO
+    @Column
+    private LocalDateTime createdAt;
 
-    // Relación con Adoptante
+    private String imageUrl;
+
+    // -------------- Relaciones --------------
     @ManyToOne
     @JoinColumn(name = "id_user")
-    private User adopter; // El adoptante también es un Usuario
+    private User user;
+
 }
