@@ -5,6 +5,7 @@ import com.huellitassolidarias.huellitassolidarias_backend.dto.response.adoption
 import com.huellitassolidarias.huellitassolidarias_backend.entity.Adoption;
 import com.huellitassolidarias.huellitassolidarias_backend.entity.Post;
 import com.huellitassolidarias.huellitassolidarias_backend.entity.User;
+import com.huellitassolidarias.huellitassolidarias_backend.enums.AdoptionStatus;
 import com.huellitassolidarias.huellitassolidarias_backend.mapper.AdoptionMapper;
 import com.huellitassolidarias.huellitassolidarias_backend.repository.AdoptionRepository;
 import com.huellitassolidarias.huellitassolidarias_backend.repository.UserRepository;
@@ -20,6 +21,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,14 +39,20 @@ public class AdoptionService {
         Adoption adoption = Adoption.builder()
                 .name(adoptionRequest.getName())
                 .species(adoptionRequest.getSpecies())
+                .gender(adoptionRequest.getGender())
                 .breed(adoptionRequest.getBreed())
-                .age(adoptionRequest.getAge())
+                .birthDate(adoptionRequest.getBirthDate())
                 .size(adoptionRequest.getSize())
+                .description(adoptionRequest.getDescription())
+                .location(adoptionRequest.getLocation())
                 .vaccinated(adoptionRequest.getVaccinated())
                 .sterilized(adoptionRequest.getSterilized())
-                .forAdoption(true)
+                .status(adoptionRequest.getStatus() != null ? adoptionRequest.getStatus() : AdoptionStatus.AVAILABLE)
+                .contactPhone(adoptionRequest.getContactPhone())
+                .contactEmail(adoptionRequest.getContactEmail())
                 .imageUrl(imageUrl)
                 .user(user)
+                .createdAt(LocalDateTime.now())
                 .build();
 
         adoptionRepository.save(adoption);
@@ -65,7 +73,5 @@ public class AdoptionService {
         return adoptionRepository.findByUser(user).stream().map(AdoptionResponse::new).toList();
     }
 
-    public List<AdoptionResponse> getAllAdoptions(Pageable pageable){
-        return adoptionRepository.findAll(pageable).stream().map(AdoptionResponse::new).toList();
-    }
+
 }

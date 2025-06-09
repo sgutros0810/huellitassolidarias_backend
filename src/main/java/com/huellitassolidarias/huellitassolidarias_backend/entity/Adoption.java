@@ -1,9 +1,15 @@
 package com.huellitassolidarias.huellitassolidarias_backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.huellitassolidarias.huellitassolidarias_backend.enums.AdoptionStatus;
+import com.huellitassolidarias.huellitassolidarias_backend.enums.Gender;
 import com.huellitassolidarias.huellitassolidarias_backend.enums.Species;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
@@ -26,26 +32,35 @@ public class Adoption {
     @Enumerated(EnumType.STRING)
     private Species species;
 
-    @Column
+    @Enumerated(EnumType.STRING)
+    private Gender gender; // MALE / FEMALE / UNKNOWN
+
     private String breed;
 
-    @Column
-    private Integer age;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "La fecha de nacimiento es obligatoria")
+    @Past(message = "La fecha debe ser en el pasado")
+    private LocalDate birthDate;
 
-    @Column
     private String size;
 
-    @Column
+    @Column(length = 1000)
+    private String description;
+
+    private String location;
+
     private Boolean vaccinated;
 
-    @Column
     private Boolean sterilized;
 
-    @Column
-    private Boolean forAdoption = true;
+    @Enumerated(EnumType.STRING)
+    private AdoptionStatus status = AdoptionStatus.AVAILABLE; // AVAILABLE, ADOPTED, RESERVED, UNDER_REVIEW
 
-    @Column
-    private LocalDateTime createdAt;
+    private String contactPhone;
+
+    private String contactEmail;
+
+    private LocalDateTime createdAt  = LocalDateTime.now();
 
     private String imageUrl;
 

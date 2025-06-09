@@ -35,7 +35,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
 
         if (userRepository.existsByUsername(request.getUsername())) {
-            throw new IllegalArgumentException("Ese nickname ya esta en uso");
+            throw new IllegalArgumentException("El usuario ya esta en uso");
         }
 
         User user = User.builder()
@@ -110,13 +110,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public LoginShelterResponse loginShelter(LoginShelterRequest request) {
-//        System.out.println("IMPRIMIR --->" + request.getIdentification());
-//        System.out.println("IMPRIMIR --->" + request.getPassword());
-
         User user = userService.findByIdentification(request.getIdentification())
                 .orElseThrow(() -> new IllegalArgumentException("Credenciales invalidas"));
-
-//        System.out.println("IMPRIMIR --->" + passwordEncoder.matches(request.getPassword(), user.getPassword()));
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new IllegalArgumentException("Credenciales invalidas");

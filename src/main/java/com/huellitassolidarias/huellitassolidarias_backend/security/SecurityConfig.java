@@ -28,6 +28,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/auth/**").permitAll() // WHITELIST
                         .requestMatchers(HttpMethod.GET, "/uploads/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/posts/**", "/api/v1/posts").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/adoptions/**", "/api/v1/adoptions").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/adoptions/**", "/api/v1/adoptions").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/posts/**").authenticated()
                         .requestMatchers(HttpMethod.GET, "/api/v1/shelters/**", "/api/v1/shelters").permitAll()
                         .anyRequest().authenticated()

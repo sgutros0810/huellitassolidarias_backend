@@ -34,8 +34,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findByIdentification(String identidication) {
-        return Optional.empty();
+    public Optional<User> findByIdentification(String identification) {
+        return userRepository.findByIdentification(identification);
     }
 
     @Override
