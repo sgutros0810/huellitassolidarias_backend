@@ -6,12 +6,14 @@ import com.huellitassolidarias.huellitassolidarias_backend.dto.response.adoption
 import com.huellitassolidarias.huellitassolidarias_backend.dto.response.post.PostResponse;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.response.user.ShelterDetailResponse;
 import com.huellitassolidarias.huellitassolidarias_backend.entity.Adoption;
+import com.huellitassolidarias.huellitassolidarias_backend.entity.Post;
 import com.huellitassolidarias.huellitassolidarias_backend.entity.User;
 import com.huellitassolidarias.huellitassolidarias_backend.enums.Category;
 import com.huellitassolidarias.huellitassolidarias_backend.enums.Role;
 import com.huellitassolidarias.huellitassolidarias_backend.enums.Species;
 import com.huellitassolidarias.huellitassolidarias_backend.mapper.AdoptionMapper;
 import com.huellitassolidarias.huellitassolidarias_backend.repository.AdoptionRepository;
+import com.huellitassolidarias.huellitassolidarias_backend.repository.UserRepository;
 import com.huellitassolidarias.huellitassolidarias_backend.service.AdoptionService;
 import com.huellitassolidarias.huellitassolidarias_backend.service.UserService;
 import jakarta.validation.Valid;
@@ -36,6 +38,7 @@ public class AdoptionController {
 
     private final AdoptionService adoptionService;
     private final AdoptionRepository adoptionRepository;
+    private final UserRepository userRepository;
 
     @PostMapping
     public ResponseEntity<?> createAdoption(@Valid @ModelAttribute AdoptionRequest adoptionRequest,  @RequestParam(value = "image") MultipartFile image, Principal principal) throws IOException {
@@ -63,5 +66,7 @@ public class AdoptionController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+
+
 }
 

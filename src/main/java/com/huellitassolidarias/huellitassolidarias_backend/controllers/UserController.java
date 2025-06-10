@@ -3,15 +3,15 @@ package com.huellitassolidarias.huellitassolidarias_backend.controllers;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.request.user.ShelterProfileRequest;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.request.user.SheltersRequest;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.request.user.UserProfileRequest;
-import com.huellitassolidarias.huellitassolidarias_backend.dto.response.comment.CommentResponse;
-import com.huellitassolidarias.huellitassolidarias_backend.dto.response.post.PostResponse;
+import com.huellitassolidarias.huellitassolidarias_backend.dto.response.adoption.AdoptionResponse;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.response.user.ShelterDetailResponse;
-import com.huellitassolidarias.huellitassolidarias_backend.dto.response.user.SheltersResponse;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.response.user.UserProfileResponse;
 import com.huellitassolidarias.huellitassolidarias_backend.entity.User;
 import com.huellitassolidarias.huellitassolidarias_backend.enums.Role;
+import com.huellitassolidarias.huellitassolidarias_backend.repository.AdoptionRepository;
 import com.huellitassolidarias.huellitassolidarias_backend.repository.UserRepository;
 import com.huellitassolidarias.huellitassolidarias_backend.security.UserDetailsAdapter;
+import com.huellitassolidarias.huellitassolidarias_backend.service.AdoptionService;
 import com.huellitassolidarias.huellitassolidarias_backend.service.ImageService;
 import com.huellitassolidarias.huellitassolidarias_backend.service.UserService;
 import jakarta.validation.Valid;
@@ -29,7 +29,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -39,6 +38,8 @@ public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;
     private final ImageService imageService;
+    private final AdoptionRepository adoptionRepository;
+    private final AdoptionService adoptionService;
 
     @GetMapping("/myprofile")
     public ResponseEntity<UserProfileResponse> getMyProfile(Principal principal) {
@@ -99,6 +100,20 @@ public class UserController {
                 .map(ShelterDetailResponse::new)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+
+    @GetMapping("shelters/details/{shelterId}/adoptions")
+    public ResponseEntity<Page<AdoptionResponse>> getAdoptionsById(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @PathVariable Long shelterId
+    ){
+        Pageable pageable  = PageRequest.of(page, size, Sort.by("createdAt").descending());
+
+        Page<AdoptionResponse> adoptions = adoptionService.getAdoptionByShelter(shelterId, pageable);
+
+      return ResponseEntity.ok(adoptions);
     }
 
 }

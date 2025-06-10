@@ -2,17 +2,21 @@ package com.huellitassolidarias.huellitassolidarias_backend.dto.response.adoptio
 
 import com.huellitassolidarias.huellitassolidarias_backend.entity.Adoption;
 import com.huellitassolidarias.huellitassolidarias_backend.entity.Post;
+import com.huellitassolidarias.huellitassolidarias_backend.entity.User;
 import com.huellitassolidarias.huellitassolidarias_backend.enums.AdoptionStatus;
 import com.huellitassolidarias.huellitassolidarias_backend.enums.Category;
 import com.huellitassolidarias.huellitassolidarias_backend.enums.Gender;
 import com.huellitassolidarias.huellitassolidarias_backend.enums.Species;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
+@Builder
 @Getter
 public class AdoptionResponse {
 
@@ -52,5 +56,8 @@ public class AdoptionResponse {
         this.imageUrl = adoption.getImageUrl();
         this.username = adoption.getUser().getUsername();
         this.createdAt = adoption.getCreatedAt();
+    }
+
+    public AdoptionResponse(User user) {
     }
 }

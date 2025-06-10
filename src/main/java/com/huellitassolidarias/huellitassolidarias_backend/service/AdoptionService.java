@@ -6,10 +6,12 @@ import com.huellitassolidarias.huellitassolidarias_backend.entity.Adoption;
 import com.huellitassolidarias.huellitassolidarias_backend.entity.Post;
 import com.huellitassolidarias.huellitassolidarias_backend.entity.User;
 import com.huellitassolidarias.huellitassolidarias_backend.enums.AdoptionStatus;
+import com.huellitassolidarias.huellitassolidarias_backend.enums.Role;
 import com.huellitassolidarias.huellitassolidarias_backend.mapper.AdoptionMapper;
 import com.huellitassolidarias.huellitassolidarias_backend.repository.AdoptionRepository;
 import com.huellitassolidarias.huellitassolidarias_backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -68,9 +70,13 @@ public class AdoptionService {
         return "/uploads/adoptions/" + fileName;
     }
 
-    public List<AdoptionResponse> getAdoptionByUser(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("Usuario no encontrado"));
-        return adoptionRepository.findByUser(user).stream().map(AdoptionResponse::new).toList();
+    public Page<AdoptionResponse> getAdoptionByShelter(Long userId, Pageable pageable) {
+
+        User shelter = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("Refugio no encontrado"));
+        if (!shelter.getRole().equals(Role.REFUGIO)) {
+            throw new RuntimeException("El usuario no es un refugio");
+        }
+        return adoptionRepository.findById(userId, pageable).map(AdoptionResponse::new);
     }
 
 

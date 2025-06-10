@@ -28,6 +28,4 @@ public interface UserService extends UserDetailsService {
     @Transactional
     void updateShelterProfile(User user, ShelterProfileRequest request);
 
-    //Page<SheltersRequest> getAllShelters(Pageable pageable);
-
 }
