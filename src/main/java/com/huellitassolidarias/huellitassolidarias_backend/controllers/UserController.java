@@ -51,6 +51,17 @@ public class UserController {
         return ResponseEntity.ok(profile);
     }
 
+    @GetMapping("/myprofile/adoptions/{userId}")
+    public ResponseEntity<Page<AdoptionResponse>> getAdoptionsById(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @PathVariable Long userId
+    ){
+        Pageable pageable  = PageRequest.of(page, size, Sort.by("createdAt").descending());
+        Page<AdoptionResponse> adoptions = adoptionService.getAdoptionByUser(userId, pageable);
+        return ResponseEntity.ok(adoptions);
+    }
+
 
     @PutMapping("/userprofile")
     public ResponseEntity<Void> updateUserProfile(@RequestBody @Valid UserProfileRequest request, Authentication authentication) {
@@ -103,17 +114,6 @@ public class UserController {
     }
 
 
-    @GetMapping("shelters/details/{shelterId}/adoptions")
-    public ResponseEntity<Page<AdoptionResponse>> getAdoptionsById(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
-            @PathVariable Long shelterId
-    ){
-        Pageable pageable  = PageRequest.of(page, size, Sort.by("createdAt").descending());
 
-        Page<AdoptionResponse> adoptions = adoptionService.getAdoptionByShelter(shelterId, pageable);
-
-      return ResponseEntity.ok(adoptions);
-    }
 
 }

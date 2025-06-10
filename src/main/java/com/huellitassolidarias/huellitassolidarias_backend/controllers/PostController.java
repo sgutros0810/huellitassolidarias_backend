@@ -91,9 +91,7 @@ public class PostController {
         @RequestParam(defaultValue = "10") int size
     ){
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
-
         List <PostResponse> posts = postRepository.findAll(pageable).map(PostResponse::new).toList();
-
         return ResponseEntity.ok(posts);
     }
 }

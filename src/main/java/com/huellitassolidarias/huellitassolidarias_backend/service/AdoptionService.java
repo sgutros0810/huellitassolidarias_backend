@@ -80,4 +80,10 @@ public class AdoptionService {
     }
 
 
+    public Page<AdoptionResponse> getAdoptionByUser(Long userId, Pageable pageable) {
+        User shelter = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("Usuario no encontrado"));
+        return adoptionRepository.findById(userId, pageable).map(AdoptionResponse::new);
+    }
+
+
 }

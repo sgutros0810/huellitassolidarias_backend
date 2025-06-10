@@ -34,7 +34,7 @@ public class User {
     private Role role = Role.USUARIO; // ADMIN, USUARIO, REFUGIO
 
     @Column(unique = true)
-    @Size(min = 4, max = 16)
+    @Size(min = 4, max = 30)
     private String username;
 
     @Column(name = "profile_image_url")
@@ -83,6 +83,9 @@ public class User {
     private String identification; // Número de Identificación Fiscal (NIF) o Código de Identificación Fiscal (CIF)
 
     private String nameShelter;
+
+    @Builder.Default
+    private boolean verified = false;
 
     @Column(nullable = true)
     private String website_url;
