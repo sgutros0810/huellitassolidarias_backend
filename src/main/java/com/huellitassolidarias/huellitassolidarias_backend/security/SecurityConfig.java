@@ -33,6 +33,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/posts/**").authenticated()
                         .requestMatchers(HttpMethod.GET, "/api/v1/shelters/**", "/api/v1/shelters").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/shelters/details/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/myprofile/adoptions/**", "/api/v1/myprofile").authenticated()
+
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
