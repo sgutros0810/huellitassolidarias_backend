@@ -72,10 +72,13 @@ public class AdoptionService {
 
     public Page<AdoptionResponse> getAdoptionByShelter(Long userId, Pageable pageable) {
 
-        User shelter = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("Refugio no encontrado"));
+        User shelter = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Refugio no encontrado"));
+
         if (!shelter.getRole().equals(Role.REFUGIO)) {
             throw new RuntimeException("El usuario no es un refugio");
         }
+
         return adoptionRepository.findById(userId, pageable).map(AdoptionResponse::new);
     }
 

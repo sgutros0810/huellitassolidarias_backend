@@ -41,6 +41,7 @@ public class UserController {
     private final AdoptionRepository adoptionRepository;
     private final AdoptionService adoptionService;
 
+    //Perfil del usuario
     @GetMapping("/myprofile")
     public ResponseEntity<UserProfileResponse> getMyProfile(Principal principal) {
         if (principal == null) {
@@ -51,6 +52,8 @@ public class UserController {
         return ResponseEntity.ok(profile);
     }
 
+
+    //Adopciones del usuario logueado
     @GetMapping("/myprofile/adoptions/{userId}")
     public ResponseEntity<Page<AdoptionResponse>> getAdoptionsById(
             @RequestParam(defaultValue = "0") int page,
@@ -90,6 +93,10 @@ public class UserController {
     }
 
 
+
+
+
+    // TOdos los refugios
     @GetMapping("/shelters")
     public ResponseEntity<Page<SheltersRequest>> getAllShelters(
             @RequestParam(defaultValue = "0") int page,
@@ -112,7 +119,6 @@ public class UserController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
-
 
 
 

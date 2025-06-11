@@ -18,6 +18,7 @@ import com.huellitassolidarias.huellitassolidarias_backend.service.AdoptionServi
 import com.huellitassolidarias.huellitassolidarias_backend.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -66,6 +67,9 @@ public class AdoptionController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+
+
+
 
 
 }

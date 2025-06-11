@@ -3,9 +3,11 @@ package com.huellitassolidarias.huellitassolidarias_backend.service.impl;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.request.user.ShelterProfileRequest;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.request.user.SheltersRequest;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.request.user.UserProfileRequest;
+import com.huellitassolidarias.huellitassolidarias_backend.dto.response.adoption.AdoptionResponse;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.response.user.UserProfileResponse;
 import com.huellitassolidarias.huellitassolidarias_backend.entity.User;
 import com.huellitassolidarias.huellitassolidarias_backend.enums.Role;
+import com.huellitassolidarias.huellitassolidarias_backend.repository.AdoptionRepository;
 import com.huellitassolidarias.huellitassolidarias_backend.repository.UserRepository;
 import com.huellitassolidarias.huellitassolidarias_backend.security.UserDetailsAdapter;
 import com.huellitassolidarias.huellitassolidarias_backend.service.UserService;
@@ -26,6 +28,7 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final AdoptionRepository adoptionRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -134,6 +137,15 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+
+//    public Page<AdoptionResponse> getAdoptionByShelter(Long userId, Pageable pageable) {
+//
+//        User shelter = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("Refugio no encontrado"));
+//        if (!shelter.getRole().equals(Role.REFUGIO)) {
+//            throw new RuntimeException("El usuario no es un refugio");
+//        }
+//        return adoptionRepository.findById(userId, pageable).map(AdoptionResponse::new);
+//    }
 
 
 

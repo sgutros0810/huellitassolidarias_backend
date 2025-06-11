@@ -13,5 +13,7 @@ public interface AdoptionRepository extends JpaRepository<Adoption, Long> {
 
     List<Adoption> findByUser(User user);
 
+    //Page<Adoption> findById(Long shelterId, Pageable pageable);
+
     Page <Adoption> findById(Long id, Pageable pageable);
 }

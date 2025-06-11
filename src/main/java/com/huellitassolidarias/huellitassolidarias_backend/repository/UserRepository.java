@@ -1,5 +1,6 @@
 package com.huellitassolidarias.huellitassolidarias_backend.repository;
 
+import com.huellitassolidarias.huellitassolidarias_backend.entity.Adoption;
 import com.huellitassolidarias.huellitassolidarias_backend.entity.User;
 
 import com.huellitassolidarias.huellitassolidarias_backend.enums.Role;
@@ -19,5 +20,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
     boolean existsByEmail(String email);
     boolean existsByIdentification(String identification);
     Optional<User> findByIdentification(String identification);
-
 }
