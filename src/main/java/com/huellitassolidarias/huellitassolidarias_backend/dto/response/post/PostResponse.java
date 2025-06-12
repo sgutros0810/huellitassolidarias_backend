@@ -32,4 +32,7 @@ public class PostResponse {
         this.username = post.getUser().getUsername();
         this.category = post.getCategory();
     }
+
+    public PostResponse(Long id, Category category, String title, String content, String imageUrl, LocalDateTime createdAt, Long id1, String username) {
+    }
 }

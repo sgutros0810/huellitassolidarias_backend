@@ -1,9 +1,11 @@
 package com.huellitassolidarias.huellitassolidarias_backend.service;
 
+import com.huellitassolidarias.huellitassolidarias_backend.dto.request.Post.PostUpdateRequest;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.response.post.PostResponse;
 import com.huellitassolidarias.huellitassolidarias_backend.entity.Post;
 import com.huellitassolidarias.huellitassolidarias_backend.entity.User;
 import com.huellitassolidarias.huellitassolidarias_backend.enums.Category;
+import com.huellitassolidarias.huellitassolidarias_backend.mapper.PostMapper;
 import com.huellitassolidarias.huellitassolidarias_backend.repository.PostRepository;
 
 import com.huellitassolidarias.huellitassolidarias_backend.repository.UserRepository;
@@ -27,6 +29,7 @@ import java.util.UUID;
 public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+    private final PostMapper postMapper;
 
     public void savePost(String title, String content, MultipartFile image, Category category, String email) throws IOException {
         User user = userRepository.findByEmail(email).orElseThrow(()-> new RuntimeException("Usuario no encontrado"));
@@ -63,5 +66,25 @@ public class PostService {
                 .stream()
                 .map(PostResponse::new)
                 .toList();
+    }
+
+
+    public PostResponse updatePost(Long postId, PostUpdateRequest postRequest, User user, MultipartFile image) throws IOException {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(()-> new RuntimeException("Post no encontrado"));
+
+        if(!post.getUser().getId().equals(user.getId())) {
+            throw new RuntimeException("No tiene permisos para editar este post");
+        }
+
+        String imageUrl = post.getImageUrl();
+        if(image != null && !image.isEmpty()) {
+            imageUrl = saveImage(image);
+        }
+
+        postMapper.updateEntity(postRequest, post, imageUrl);
+        Post updated = postRepository.save(post);
+        return postMapper.toResponse(updated);
+
     }
 }

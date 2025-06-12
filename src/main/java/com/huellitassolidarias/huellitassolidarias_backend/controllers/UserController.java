@@ -96,8 +96,6 @@ public class UserController {
 
 
 
-
-
     // TOdos los refugios
     @GetMapping("/shelters")
     public ResponseEntity<Page<SheltersRequest>> getAllShelters(

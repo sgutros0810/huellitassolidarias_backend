@@ -4,6 +4,7 @@ import com.huellitassolidarias.huellitassolidarias_backend.dto.request.user.Shel
 import com.huellitassolidarias.huellitassolidarias_backend.dto.request.user.SheltersRequest;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.request.user.UserProfileRequest;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.response.adoption.AdoptionResponse;
+import com.huellitassolidarias.huellitassolidarias_backend.dto.response.user.SheltersResponse;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.response.user.UserProfileResponse;
 import com.huellitassolidarias.huellitassolidarias_backend.entity.User;
 import com.huellitassolidarias.huellitassolidarias_backend.enums.Role;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -122,7 +124,6 @@ public class UserServiceImpl implements UserService {
             }
             user.setEmail(request.getEmail());
         }
-
         if(request.getPhoneNumber() != null) user.setPhoneNumber(request.getPhoneNumber());
         if(request.getAddress() != null) user.setAddress(request.getAddress());
         if(request.getCity() != null) user.setCity(request.getCity());
@@ -131,38 +132,17 @@ public class UserServiceImpl implements UserService {
         if(request.getNameShelter() != null) user.setNameShelter(request.getNameShelter());
         if(request.getIdentification() != null) user.setIdentification(request.getIdentification());
         if(request.getWebsiteUrl() != null) user.setWebsite_url(request.getWebsiteUrl());
-//        if (request.getNewPassword() != null && !request.getNewPassword().isBlank()) {
-//            user.setPassword(passwordEncoder.encode(request.getNewPassword()));
-//        }
+
         userRepository.save(user);
     }
 
 
-//    public Page<AdoptionResponse> getAdoptionByShelter(Long userId, Pageable pageable) {
-//
-//        User shelter = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("Refugio no encontrado"));
-//        if (!shelter.getRole().equals(Role.REFUGIO)) {
-//            throw new RuntimeException("El usuario no es un refugio");
-//        }
-//        return adoptionRepository.findById(userId, pageable).map(AdoptionResponse::new);
-//    }
+    public List<SheltersResponse> searchShelters(String name, String username, String city, String country) {
+        List<User> matches = userRepository.search(name, username, city, country);
 
-
-
-
-//    public Page<SheltersRequest> getAllShelters(Pageable pageable) {
-//        Page<User> sheltersPage = userRepository.findByRole(Role.REFUGIO, pageable);
-//
-//        return sheltersPage.map(user -> SheltersRequest.builder()
-//                .id(user.getId())
-//                .nameShelter(user.getNameShelter())
-//                .identification(user.getIdentification())
-//                .city(user.getCity())
-//                .country(user.getCountry())
-//                .websiteUrl(user.getWebsite_url())
-//                .profileImageUrl(user.getProfileImageUrl())
-//                .build());
-//    }
-
-
+        // Mapeamos cada User al dto
+        return matches.stream()
+                .map(SheltersResponse::new)
+                .collect(Collectors.toList());
+    }
 }

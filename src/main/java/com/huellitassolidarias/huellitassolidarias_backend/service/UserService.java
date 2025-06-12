@@ -5,6 +5,7 @@ import com.huellitassolidarias.huellitassolidarias_backend.dto.request.user.Shel
 import com.huellitassolidarias.huellitassolidarias_backend.dto.request.user.SheltersRequest;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.request.user.UserProfileRequest;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.response.adoption.AdoptionResponse;
+import com.huellitassolidarias.huellitassolidarias_backend.dto.response.user.SheltersResponse;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.response.user.UserProfileResponse;
 import com.huellitassolidarias.huellitassolidarias_backend.entity.User;
 import jakarta.transaction.Transactional;
@@ -28,6 +29,9 @@ public interface UserService extends UserDetailsService {
 
     @Transactional
     void updateShelterProfile(User user, ShelterProfileRequest request);
+
+    List<SheltersResponse> searchShelters(String name, String username, String city, String country);
+
 
     // Page<AdoptionResponse> getAdoptionByShelter(Long userId, Pageable pageable);
 }

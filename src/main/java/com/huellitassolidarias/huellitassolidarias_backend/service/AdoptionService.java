@@ -91,7 +91,7 @@ public class AdoptionService {
         Adoption adoption = adoptionRepository.findById(adoptionId).orElseThrow(()-> new RuntimeException("Adopcion no encontrada"));
 
         if(!adoption.getUser().getId().equals(user.getId())) {
-            throw new RuntimeException("No permiso");
+            throw new RuntimeException("No tienes permiso para editar");
         }
 
         String imageUrl = adoption.getImageUrl();
@@ -126,7 +126,7 @@ public class AdoptionService {
         Adoption adoption = adoptionRepository.findById(id).orElseThrow(()-> new RuntimeException("Adopcion no encontrada"));
 
         if (!adoption.getUser().getId().equals(user.getId())) {
-            throw new RuntimeException("No tienes permisos");
+            throw new RuntimeException("No tienes permisos para editar");
         }
 
         adoptionRepository.delete(adoption);

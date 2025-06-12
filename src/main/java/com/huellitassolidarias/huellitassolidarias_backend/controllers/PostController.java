@@ -1,11 +1,13 @@
 package com.huellitassolidarias.huellitassolidarias_backend.controllers;
 
+import com.huellitassolidarias.huellitassolidarias_backend.dto.request.Post.PostUpdateRequest;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.response.post.PostResponse;
 import com.huellitassolidarias.huellitassolidarias_backend.entity.Post;
+import com.huellitassolidarias.huellitassolidarias_backend.entity.User;
 import com.huellitassolidarias.huellitassolidarias_backend.enums.Category;
-import com.huellitassolidarias.huellitassolidarias_backend.mapper.PostMapper;
 import com.huellitassolidarias.huellitassolidarias_backend.repository.PostRepository;
 import com.huellitassolidarias.huellitassolidarias_backend.repository.UserRepository;
+import com.huellitassolidarias.huellitassolidarias_backend.security.UserDetailsAdapter;
 import com.huellitassolidarias.huellitassolidarias_backend.service.PostService;
 
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
@@ -97,6 +100,15 @@ public class PostController {
         }
         postRepository.delete(post);
         return ResponseEntity.noContent().build();
+    }
+
+
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<PostResponse> updatePost(@PathVariable Long id, @ModelAttribute PostUpdateRequest postRequest, @RequestParam(required = false) MultipartFile image, Authentication authentication) throws IOException {
+        User user = ((UserDetailsAdapter) authentication.getPrincipal()).getUser();
+        postService.updatePost(id, postRequest, user, image);
+        return ResponseEntity.ok().build();
     }
 
 

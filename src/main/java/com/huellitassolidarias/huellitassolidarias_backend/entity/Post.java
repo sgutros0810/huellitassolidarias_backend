@@ -2,9 +2,8 @@ package com.huellitassolidarias.huellitassolidarias_backend.entity;
 
 import com.huellitassolidarias.huellitassolidarias_backend.enums.Category;
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -13,6 +12,9 @@ import java.util.Set;
 @Table(name = "posts")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -12,8 +12,21 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class SheltersResponse {
-    private List<SheltersRequest> shelters;
+    private Long   id;
+    private String nameShelter;
+    private String identification;
+    private String city;
+    private String country;
+    private String websiteUrl;
+    private String profileImageUrl;
 
     public SheltersResponse(User user) {
+        this.id              = user.getId();
+        this.nameShelter     = user.getNameShelter();
+        this.identification  = user.getIdentification();
+        this.city            = user.getCity();
+        this.country         = user.getCountry();
+        this.websiteUrl      = user.getWebsite_url();
+        this.profileImageUrl = user.getProfileImageUrl();
     }
 }
