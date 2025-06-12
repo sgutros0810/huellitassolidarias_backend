@@ -14,6 +14,7 @@ import com.huellitassolidarias.huellitassolidarias_backend.enums.Species;
 import com.huellitassolidarias.huellitassolidarias_backend.mapper.AdoptionMapper;
 import com.huellitassolidarias.huellitassolidarias_backend.repository.AdoptionRepository;
 import com.huellitassolidarias.huellitassolidarias_backend.repository.UserRepository;
+import com.huellitassolidarias.huellitassolidarias_backend.security.UserDetailsAdapter;
 import com.huellitassolidarias.huellitassolidarias_backend.service.AdoptionService;
 import com.huellitassolidarias.huellitassolidarias_backend.service.UserService;
 import jakarta.validation.Valid;
@@ -69,7 +70,20 @@ public class AdoptionController {
     }
 
 
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> deleteAdoption(@PathVariable Long id, Authentication authentication) {
+        User user = ((UserDetailsAdapter) authentication.getPrincipal()).getUser();
+        adoptionService.deleteAdoption(id, user);
+        return ResponseEntity.ok().build();
+    }
 
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<?> updateAdoption(@PathVariable Long id, @ModelAttribute AdoptionRequest adoptionRequest, @RequestParam(required = false) MultipartFile image, Authentication authentication) throws IOException {
+        User user = ((UserDetailsAdapter) authentication.getPrincipal()).getUser();
+        adoptionService.updateAdoption(id, adoptionRequest, user, image);
+        return ResponseEntity.ok().build();
+    }
 
 
 }

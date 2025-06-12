@@ -1,9 +1,6 @@
 package com.huellitassolidarias.huellitassolidarias_backend.controllers;
 
-import com.huellitassolidarias.huellitassolidarias_backend.dto.request.auth.LoginShelterRequest;
-import com.huellitassolidarias.huellitassolidarias_backend.dto.request.auth.LoginUserRequest;
-import com.huellitassolidarias.huellitassolidarias_backend.dto.request.auth.RegisterShelterRequest;
-import com.huellitassolidarias.huellitassolidarias_backend.dto.request.auth.RegisterUserRequest;
+import com.huellitassolidarias.huellitassolidarias_backend.dto.request.auth.*;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.response.auth.LoginShelterResponse;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.response.auth.LoginUserResponse;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.response.auth.RegisterShelterResponse;
@@ -50,4 +47,16 @@ public class AuthenticationController {
         LoginShelterResponse response = authenticationService.loginShelter(request);
         return ResponseEntity.ok(response);
     }
+
+//    @PostMapping("/forgot-password")
+//    public ResponseEntity<?> forgotPassword(@RequestBody @Valid ForgotPasswordRequest request) {
+//        authenticationService.sendResetEmail(request.getEmail());
+//        return ResponseEntity.ok("Correo enviado (si el email existe en el sistema)");
+//    }
+//
+//    @PostMapping("/reset-password")
+//    public ResponseEntity<?> resetPassword(@RequestBody @Valid ResetPasswordRequest request) {
+//        authenticationService.resetPassword(request.getToken(), request.getNewPassword());
+//        return ResponseEntity.ok("Contraseña actualizada con éxito");
+//    }
 }

@@ -72,20 +72,61 @@ public class AdoptionService {
 
     public Page<AdoptionResponse> getAdoptionByShelter(Long userId, Pageable pageable) {
 
-        User shelter = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("Refugio no encontrado"));
-
+        User shelter = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("Refugio no encontrado"));
         if (!shelter.getRole().equals(Role.REFUGIO)) {
             throw new RuntimeException("El usuario no es un refugio");
         }
-
         return adoptionRepository.findById(userId, pageable).map(AdoptionResponse::new);
     }
 
 
-    public Page<AdoptionResponse> getAdoptionByUser(Long userId, Pageable pageable) {
-        User user = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("Usuario no encontrado"));
-        return adoptionRepository.findById(userId, pageable).map(AdoptionResponse::new);
+    public Page<AdoptionResponse> getAdoptionByUser(User user, Pageable pageable) {
+        return adoptionRepository.findByUser(user, pageable).map(AdoptionResponse::new);
+    }
+
+    public void updateAdoption(Long adoptionId, AdoptionRequest adoptionRequest, User user, MultipartFile image) throws IOException {
+        Adoption adoption = adoptionRepository.findById(adoptionId).orElseThrow(()-> new RuntimeException("Adopcion no encontrada"));
+
+        if(!adoption.getUser().getId().equals(user.getId())) {
+            throw new RuntimeException("No permiso");
+        }
+
+        String imageUrl = adoption.getImageUrl();
+        if(image != null && !image.isEmpty()) {
+            imageUrl = saveImage(image);
+        }
+
+        Adoption updated = Adoption.builder()
+                .id(adoption.getId())
+                .user(adoption.getUser())
+                .name(adoptionRequest.getName())
+                .species(adoptionRequest.getSpecies())
+                .gender(adoptionRequest.getGender())
+                .breed(adoptionRequest.getBreed())
+                .birthDate(adoptionRequest.getBirthDate())
+                .size(adoptionRequest.getSize())
+                .description(adoptionRequest.getDescription())
+                .location(adoptionRequest.getLocation())
+                .vaccinated(adoptionRequest.getVaccinated())
+                .sterilized(adoptionRequest.getSterilized())
+                .status(adoptionRequest.getStatus())
+                .contactPhone(adoptionRequest.getContactPhone())
+                .contactEmail(adoptionRequest.getContactEmail())
+                .imageUrl(imageUrl)
+                .build();
+
+        adoptionRepository.save(updated);
+
+    }
+
+    public void deleteAdoption(Long id, User user) {
+        Adoption adoption = adoptionRepository.findById(id).orElseThrow(()-> new RuntimeException("Adopcion no encontrada"));
+
+        if (!adoption.getUser().getId().equals(user.getId())) {
+            throw new RuntimeException("No tienes permisos");
+        }
+
+        adoptionRepository.delete(adoption);
     }
 
 

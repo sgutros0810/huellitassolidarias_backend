@@ -37,7 +37,7 @@ public class Post {
     @JoinColumn(name = "id_user", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<Comment> comment; // Una publicacion puede tener varios comentarios
 
 }

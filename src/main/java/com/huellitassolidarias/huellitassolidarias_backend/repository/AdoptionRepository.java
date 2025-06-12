@@ -11,9 +11,12 @@ import java.util.Optional;
 
 public interface AdoptionRepository extends JpaRepository<Adoption, Long> {
 
-    List<Adoption> findByUser(User user);
+    Page<Adoption> findByUser(User user, Pageable pageable);
+
 
     //Page<Adoption> findById(Long shelterId, Pageable pageable);
 
-    Page <Adoption> findById(Long id, Pageable pageable);
+    Page<Adoption> findById(Long id, Pageable pageable);
+
+    Page<Adoption> findByUserId(Long userId, Pageable pageable);
 }

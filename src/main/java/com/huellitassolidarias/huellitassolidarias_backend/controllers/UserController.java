@@ -6,6 +6,7 @@ import com.huellitassolidarias.huellitassolidarias_backend.dto.request.user.User
 import com.huellitassolidarias.huellitassolidarias_backend.dto.response.adoption.AdoptionResponse;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.response.user.ShelterDetailResponse;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.response.user.UserProfileResponse;
+import com.huellitassolidarias.huellitassolidarias_backend.entity.Adoption;
 import com.huellitassolidarias.huellitassolidarias_backend.entity.User;
 import com.huellitassolidarias.huellitassolidarias_backend.enums.Role;
 import com.huellitassolidarias.huellitassolidarias_backend.repository.AdoptionRepository;
@@ -54,14 +55,15 @@ public class UserController {
 
 
     //Adopciones del usuario logueado
-    @GetMapping("/myprofile/adoptions/{userId}")
-    public ResponseEntity<Page<AdoptionResponse>> getAdoptionsById(
+    @GetMapping("/myprofile/adoptions")
+    public ResponseEntity<Page<AdoptionResponse>> getAdoptionsByUserId(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @PathVariable Long userId
+            Authentication authentication
     ){
-        Pageable pageable  = PageRequest.of(page, size, Sort.by("createdAt").descending());
-        Page<AdoptionResponse> adoptions = adoptionService.getAdoptionByUser(userId, pageable);
+        User user = ((UserDetailsAdapter) authentication.getPrincipal()).getUser();
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+        Page<AdoptionResponse> adoptions = adoptionService.getAdoptionByUser(user, pageable);
         return ResponseEntity.ok(adoptions);
     }
 
