@@ -70,19 +70,22 @@ public class AdoptionService {
         return "/uploads/adoptions/" + fileName;
     }
 
-    public Page<AdoptionResponse> getAdoptionByShelter(Long userId, Pageable pageable) {
 
-        User shelter = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("Refugio no encontrado"));
-        if (!shelter.getRole().equals(Role.REFUGIO)) {
+    public Page<AdoptionResponse> getAdoptionByShelter(Long shelterId, Pageable pageable) {
+        User shelter = userRepository.findById(shelterId)
+                .orElseThrow(() -> new RuntimeException("Refugio no encontrado"));
+        if (shelter.getRole() != Role.REFUGIO) {
             throw new RuntimeException("El usuario no es un refugio");
         }
-        return adoptionRepository.findById(userId, pageable).map(AdoptionResponse::new);
+
+        return adoptionRepository.findByUser(shelter, pageable).map(AdoptionResponse::new);
     }
 
 
     public Page<AdoptionResponse> getAdoptionByUser(User user, Pageable pageable) {
         return adoptionRepository.findByUser(user, pageable).map(AdoptionResponse::new);
     }
+
 
     public void updateAdoption(Long adoptionId, AdoptionRequest adoptionRequest, User user, MultipartFile image) throws IOException {
         Adoption adoption = adoptionRepository.findById(adoptionId).orElseThrow(()-> new RuntimeException("Adopcion no encontrada"));
