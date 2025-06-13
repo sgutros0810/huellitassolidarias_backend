@@ -1,5 +1,6 @@
 package com.huellitassolidarias.huellitassolidarias_backend.entity;
 
+import com.huellitassolidarias.huellitassolidarias_backend.enums.State;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -7,6 +8,11 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "animals_reports")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class AnimalReport {
 
     @Id
@@ -27,10 +33,11 @@ public class AnimalReport {
     private LocalDateTime reportDate; // Fecha en la que se realizó el reporte
 
     @Column
-    private String image; // URL de la imagen del animal
+    private String imageUrl; // URL de la imagen del animal
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String state; // Puede ser "Perdido", "Encontrado", etc.
+    private State state; // Puede ser "Perdido" o "Encontrado"
 
 
     // Relaciones

@@ -1,4 +1,4 @@
-package com.huellitassolidarias.huellitassolidarias_backend.service;
+package com.huellitassolidarias.huellitassolidarias_backend.service.impl;
 
 import com.huellitassolidarias.huellitassolidarias_backend.dto.request.comment.CommentRequest;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.response.comment.CommentResponse;

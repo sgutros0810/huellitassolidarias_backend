@@ -1,6 +1,6 @@
-package com.huellitassolidarias.huellitassolidarias_backend.service;
+package com.huellitassolidarias.huellitassolidarias_backend.service.impl;
 
-import com.huellitassolidarias.huellitassolidarias_backend.dto.request.Post.PostUpdateRequest;
+import com.huellitassolidarias.huellitassolidarias_backend.dto.request.post.PostUpdateRequest;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.response.post.PostResponse;
 import com.huellitassolidarias.huellitassolidarias_backend.entity.Post;
 import com.huellitassolidarias.huellitassolidarias_backend.entity.User;

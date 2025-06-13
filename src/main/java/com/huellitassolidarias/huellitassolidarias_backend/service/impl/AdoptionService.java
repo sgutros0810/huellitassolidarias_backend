@@ -1,9 +1,8 @@
-package com.huellitassolidarias.huellitassolidarias_backend.service;
+package com.huellitassolidarias.huellitassolidarias_backend.service.impl;
 
 import com.huellitassolidarias.huellitassolidarias_backend.dto.request.adoption.AdoptionRequest;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.response.adoption.AdoptionResponse;
 import com.huellitassolidarias.huellitassolidarias_backend.entity.Adoption;
-import com.huellitassolidarias.huellitassolidarias_backend.entity.Post;
 import com.huellitassolidarias.huellitassolidarias_backend.entity.User;
 import com.huellitassolidarias.huellitassolidarias_backend.enums.AdoptionStatus;
 import com.huellitassolidarias.huellitassolidarias_backend.enums.Role;
@@ -24,7 +23,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 @Service

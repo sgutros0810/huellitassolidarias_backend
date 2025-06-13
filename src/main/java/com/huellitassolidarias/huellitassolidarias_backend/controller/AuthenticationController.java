@@ -1,4 +1,4 @@
-package com.huellitassolidarias.huellitassolidarias_backend.controllers;
+package com.huellitassolidarias.huellitassolidarias_backend.controller;
 
 import com.huellitassolidarias.huellitassolidarias_backend.dto.request.auth.*;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.response.auth.LoginShelterResponse;

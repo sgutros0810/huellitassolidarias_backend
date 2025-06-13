@@ -1,8 +1,8 @@
-package com.huellitassolidarias.huellitassolidarias_backend.controllers;
+package com.huellitassolidarias.huellitassolidarias_backend.controller;
 
 import com.huellitassolidarias.huellitassolidarias_backend.dto.request.comment.CommentRequest;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.response.comment.CommentResponse;
-import com.huellitassolidarias.huellitassolidarias_backend.service.CommentService;
+import com.huellitassolidarias.huellitassolidarias_backend.service.impl.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

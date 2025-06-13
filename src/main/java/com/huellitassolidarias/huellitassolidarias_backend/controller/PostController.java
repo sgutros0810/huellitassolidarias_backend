@@ -1,6 +1,6 @@
-package com.huellitassolidarias.huellitassolidarias_backend.controllers;
+package com.huellitassolidarias.huellitassolidarias_backend.controller;
 
-import com.huellitassolidarias.huellitassolidarias_backend.dto.request.Post.PostUpdateRequest;
+import com.huellitassolidarias.huellitassolidarias_backend.dto.request.post.PostUpdateRequest;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.response.post.PostResponse;
 import com.huellitassolidarias.huellitassolidarias_backend.entity.Post;
 import com.huellitassolidarias.huellitassolidarias_backend.entity.User;
@@ -8,7 +8,7 @@ import com.huellitassolidarias.huellitassolidarias_backend.enums.Category;
 import com.huellitassolidarias.huellitassolidarias_backend.repository.PostRepository;
 import com.huellitassolidarias.huellitassolidarias_backend.repository.UserRepository;
 import com.huellitassolidarias.huellitassolidarias_backend.security.UserDetailsAdapter;
-import com.huellitassolidarias.huellitassolidarias_backend.service.PostService;
+import com.huellitassolidarias.huellitassolidarias_backend.service.impl.PostService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;

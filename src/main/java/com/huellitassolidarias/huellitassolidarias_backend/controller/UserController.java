@@ -1,4 +1,4 @@
-package com.huellitassolidarias.huellitassolidarias_backend.controllers;
+package com.huellitassolidarias.huellitassolidarias_backend.controller;
 
 import com.huellitassolidarias.huellitassolidarias_backend.dto.request.user.ShelterProfileRequest;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.request.user.SheltersRequest;
@@ -6,14 +6,13 @@ import com.huellitassolidarias.huellitassolidarias_backend.dto.request.user.User
 import com.huellitassolidarias.huellitassolidarias_backend.dto.response.adoption.AdoptionResponse;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.response.user.ShelterDetailResponse;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.response.user.UserProfileResponse;
-import com.huellitassolidarias.huellitassolidarias_backend.entity.Adoption;
 import com.huellitassolidarias.huellitassolidarias_backend.entity.User;
 import com.huellitassolidarias.huellitassolidarias_backend.enums.Role;
 import com.huellitassolidarias.huellitassolidarias_backend.repository.AdoptionRepository;
 import com.huellitassolidarias.huellitassolidarias_backend.repository.UserRepository;
 import com.huellitassolidarias.huellitassolidarias_backend.security.UserDetailsAdapter;
-import com.huellitassolidarias.huellitassolidarias_backend.service.AdoptionService;
-import com.huellitassolidarias.huellitassolidarias_backend.service.ImageService;
+import com.huellitassolidarias.huellitassolidarias_backend.service.impl.AdoptionService;
+import com.huellitassolidarias.huellitassolidarias_backend.service.impl.ImageService;
 import com.huellitassolidarias.huellitassolidarias_backend.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

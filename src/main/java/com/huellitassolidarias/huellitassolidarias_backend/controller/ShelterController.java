@@ -1,11 +1,9 @@
-package com.huellitassolidarias.huellitassolidarias_backend.controllers;
+package com.huellitassolidarias.huellitassolidarias_backend.controller;
 
 import com.huellitassolidarias.huellitassolidarias_backend.dto.response.adoption.AdoptionResponse;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.response.user.SheltersResponse;
-import com.huellitassolidarias.huellitassolidarias_backend.dto.response.user.UserProfileResponse;
-import com.huellitassolidarias.huellitassolidarias_backend.entity.User;
 import com.huellitassolidarias.huellitassolidarias_backend.repository.UserRepository;
-import com.huellitassolidarias.huellitassolidarias_backend.service.AdoptionService;
+import com.huellitassolidarias.huellitassolidarias_backend.service.impl.AdoptionService;
 import com.huellitassolidarias.huellitassolidarias_backend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

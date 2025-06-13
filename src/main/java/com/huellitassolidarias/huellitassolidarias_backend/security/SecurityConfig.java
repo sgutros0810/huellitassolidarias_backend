@@ -34,6 +34,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/v1/shelters/**", "/api/v1/shelters").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/shelters/details/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/myprofile/adoptions/**", "/api/v1/myprofile").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/animal-reports/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/animal-reports/**").authenticated()
 
                         .anyRequest().authenticated()
                 )

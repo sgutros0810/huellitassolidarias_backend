@@ -1,4 +1,4 @@
-package com.huellitassolidarias.huellitassolidarias_backend.dto.request.Post;
+package com.huellitassolidarias.huellitassolidarias_backend.dto.request.post;
 
 import com.huellitassolidarias.huellitassolidarias_backend.enums.Category;
 import jakarta.validation.constraints.NotBlank;
