@@ -1,6 +1,7 @@
 package com.huellitassolidarias.huellitassolidarias_backend.entity;
 
 
+import com.huellitassolidarias.huellitassolidarias_backend.enums.City;
 import com.huellitassolidarias.huellitassolidarias_backend.enums.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -51,7 +52,8 @@ public class User {
 
     private String address;
 
-    private String city;
+    @Enumerated(EnumType.STRING)
+    private City city;
 
     private String country;
 
@@ -89,6 +91,23 @@ public class User {
 
     @Column(nullable = true)
     private String website_url;
+
+    @Column(nullable = true)
+    @Size(max = 64)
+    private String bankAccount;
+
+    @Column(nullable = true)
+    @Size(max = 14)
+    private String bizum;
+
+    @Column(nullable = true)
+    @Email
+    private String paypal;
+
+    @Column(name = "donation_message", length = 500, nullable = true)
+    private String donationMessage;
+
+    private boolean verificationRequested = false;
 
 
     // -------------- Relaciones --------------

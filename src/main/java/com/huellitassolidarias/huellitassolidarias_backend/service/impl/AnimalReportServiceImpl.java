@@ -59,6 +59,8 @@ public class AnimalReportServiceImpl implements AnimalReportService {
         report.setImageUrl(imageUrl);
         report.setReportDate(LocalDateTime.now());
         report.setState(request.getState());
+        report.setContactName(request.getContactName());
+        report.setContactPhone(request.getContactPhone());
         report.setUser(user);
 
         AnimalReport saved = reportRepository.save(report);
@@ -73,6 +75,22 @@ public class AnimalReportServiceImpl implements AnimalReportService {
     @Override
     public Page<AnimalReportResponse> getReportsByState(State state, Pageable pageable) {
         return reportRepository.findByState(state, pageable).map(AnimalReportResponse::new);
+    }
+
+    @Override
+    public Page<AnimalReportResponse> getMyReports(String username, Pageable pageable) {
+        return reportRepository
+                .findByUser_Email(username, pageable)
+                .map(AnimalReportResponse::new);
+    }
+
+    @Override
+    public void updateReportState(Long reportId, State newState, String username) {
+        AnimalReport rpt = reportRepository
+                .findByIdAndUser_Email(reportId, username)
+                .orElseThrow(() -> new RuntimeException("Reporte no encontrado o no autorizado"));
+        rpt.setState(newState);
+        reportRepository.save(rpt);
     }
 
 }

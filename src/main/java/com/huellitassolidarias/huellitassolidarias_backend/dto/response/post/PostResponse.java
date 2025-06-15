@@ -17,6 +17,7 @@ public class PostResponse {
     private Long id;
     private String title;
     private String content;
+    private String profileImageUrl;
     private LocalDateTime createdAt;
     private String imageUrl;
     private Category category;
@@ -29,10 +30,20 @@ public class PostResponse {
         this.content = post.getContent();
         this.createdAt = post.getCreatedAt();
         this.imageUrl = post.getImageUrl();
+        this.profileImageUrl = post.getUser().getProfileImageUrl();
         this.username = post.getUser().getUsername();
         this.category = post.getCategory();
     }
 
-    public PostResponse(Long id, Category category, String title, String content, String imageUrl, LocalDateTime createdAt, Long id1, String username) {
+    public PostResponse(Long id, Category category, String title, String content, String imageUrl, LocalDateTime createdAt, String profileImageUrl, String username) {
+        this.id = id;
+        this.category = category;
+        this.title = title;
+        this.content = content;
+        this.imageUrl = imageUrl;
+        this.createdAt = createdAt;
+        this.profileImageUrl = profileImageUrl;
+        this.username = username;
     }
+
 }

@@ -37,8 +37,13 @@ public class AnimalReport {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private State state; // Puede ser "Perdido" o "Encontrado"
+    private State state = State.MISSING; // Puede ser "Perdido" o "Encontrado"
 
+    @Column(nullable = false)
+    private String contactName;
+
+    @Column(nullable = false)
+    private String contactPhone;
 
     // Relaciones
     @ManyToOne

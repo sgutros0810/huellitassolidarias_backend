@@ -34,8 +34,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/v1/shelters/**", "/api/v1/shelters").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/shelters/details/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/myprofile/adoptions/**", "/api/v1/myprofile").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/animal-reports/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/animal-reports/**").authenticated()
+                        .requestMatchers(HttpMethod.GET,  "/api/v1/animal-reports", "/api/v1/animal-reports/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/animal-reports", "/api/v1/animal-reports/**").authenticated()
 
                         .anyRequest().authenticated()
                 )
@@ -47,7 +47,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(List.of("http://localhost:4200"));
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
 

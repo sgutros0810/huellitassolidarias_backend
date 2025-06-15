@@ -17,4 +17,9 @@ public interface AnimalReportRepository extends JpaRepository<AnimalReport, Long
     Page<AnimalReport> findAll(Pageable pageable);
     Page<AnimalReport> findByState(State state, Pageable pageable);
 
+    Page<AnimalReport> findByUser_Email(String username, Pageable pageable);
+    Optional<AnimalReport> findByIdAndUser_Email(Long id, String username);
+    Page<AnimalReport> findByUserUsernameContainingIgnoreCase(String username, Pageable pageable);
+
+    void deleteByUserId(Long userId);
 }

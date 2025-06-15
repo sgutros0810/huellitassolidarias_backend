@@ -33,4 +33,5 @@ public class CommentController {
         commentService.addCommentToPost(postId, request, principal);
         return ResponseEntity.ok().build();
     }
+
 }

@@ -13,4 +13,6 @@ public class AnimalReportRequest {
     private String location;
     private MultipartFile image;
     private State state;
+    private String contactName;
+    private String contactPhone;
 }

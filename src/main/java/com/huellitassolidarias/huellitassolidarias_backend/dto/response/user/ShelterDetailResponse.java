@@ -1,6 +1,7 @@
 package com.huellitassolidarias.huellitassolidarias_backend.dto.response.user;
 
 import com.huellitassolidarias.huellitassolidarias_backend.entity.User;
+import com.huellitassolidarias.huellitassolidarias_backend.enums.City;
 import lombok.*;
 
 @Getter
@@ -15,12 +16,17 @@ public class ShelterDetailResponse {
     private String username;
     private String nameShelter;
     private String address;
-    private String city;
+    private City city;
     private String country;
     private String email;
     private String websiteUrl;
     private String profileImageUrl;
+    private boolean verified;
 
+    private String bankAccount;
+    private String bizum;
+    private String paypal;
+    private String donationMessage;
 
     public ShelterDetailResponse(User user) {
         this.id = user.getId();
@@ -34,6 +40,11 @@ public class ShelterDetailResponse {
         this.email = user.getEmail();
         this.websiteUrl = user.getWebsite_url();
         this.profileImageUrl = user.getProfileImageUrl();
+        this.verified = user.isVerified();
+        this.bankAccount = user.getBankAccount();
+        this.bizum = user.getBizum();
+        this.paypal = user.getPaypal();
+        this.donationMessage = user.getDonationMessage();
     }
 
 }

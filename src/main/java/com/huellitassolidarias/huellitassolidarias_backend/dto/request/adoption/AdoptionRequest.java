@@ -1,6 +1,7 @@
 package com.huellitassolidarias.huellitassolidarias_backend.dto.request.adoption;
 
 import com.huellitassolidarias.huellitassolidarias_backend.enums.AdoptionStatus;
+import com.huellitassolidarias.huellitassolidarias_backend.enums.City;
 import com.huellitassolidarias.huellitassolidarias_backend.enums.Gender;
 import com.huellitassolidarias.huellitassolidarias_backend.enums.Species;
 import jakarta.validation.constraints.*;
@@ -29,14 +30,13 @@ public class AdoptionRequest {
     @Past(message = "La fecha debe ser en el pasado")
     private LocalDate birthDate;
 
-    @Size(max = 20, message = "El tamaño debe tener como máximo 20 caracteres")
-    private String size;
+//    @Size(max = 20, message = "El tamaño debe tener como máximo 20 caracteres")
+//    private String size;
 
     @Size(max = 1000, message = "La descripción no puede superar los 1000 caracteres")
     private String description;
 
-    @Size(max = 100, message = "La ubicación no puede superar los 100 caracteres")
-    private String location;
+    private City city;
 
     private Boolean vaccinated;
 

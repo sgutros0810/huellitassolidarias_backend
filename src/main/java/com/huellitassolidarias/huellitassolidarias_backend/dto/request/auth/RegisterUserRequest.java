@@ -2,6 +2,7 @@ package com.huellitassolidarias.huellitassolidarias_backend.dto.request.auth;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.huellitassolidarias.huellitassolidarias_backend.enums.City;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,7 +29,7 @@ public class RegisterUserRequest {
     @NotBlank(message = "La dirección física es obligatoria")
     private String address;
 
-    private String city;
+    private City city;
 
     private String country;
 

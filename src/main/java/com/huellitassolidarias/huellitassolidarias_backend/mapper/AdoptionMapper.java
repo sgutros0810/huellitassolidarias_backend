@@ -20,7 +20,7 @@ public class AdoptionMapper {
 
     private final UserRepository userRepository;
 
-    public static AdoptionResponse toAdoption(Adoption adoption) {
+    public AdoptionResponse toResponse(Adoption adoption) {
         return new AdoptionResponse(adoption);
     }
 
@@ -32,9 +32,8 @@ public class AdoptionMapper {
                 .gender(request.getGender())
                 .breed(request.getBreed())
                 .birthDate(request.getBirthDate())
-                .size(request.getSize())
                 .description(request.getDescription())
-                .location(request.getLocation())
+                .city(request.getCity())
                 .vaccinated(request.getVaccinated())
                 .sterilized(request.getSterilized())
                 .status(request.getStatus() != null ? request.getStatus() : AdoptionStatus.AVAILABLE)

@@ -14,4 +14,9 @@ public interface AnimalReportService {
     Page<AnimalReportResponse> getAllReports(Pageable pageable);
     Page<AnimalReportResponse> getReportsByState(State state, Pageable pageable);
     String saveImage(MultipartFile file) throws IOException;
+
+    Page<AnimalReportResponse> getMyReports(String username, Pageable pageable);
+
+    // para cambiar estado de un reporte tuyo
+    void updateReportState(Long reportId, State newState, String username);
 }

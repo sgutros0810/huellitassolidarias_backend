@@ -1,5 +1,6 @@
 package com.huellitassolidarias.huellitassolidarias_backend.dto.response.user;
 
+import com.huellitassolidarias.huellitassolidarias_backend.enums.City;
 import com.huellitassolidarias.huellitassolidarias_backend.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,7 +17,7 @@ public class UserProfileResponse {
     private String email;
     private String phoneNumber;
     private String address;
-    private String city;
+    private City city;
     private String country;
     private Role role;
     private LocalDateTime creationDate;
@@ -30,4 +31,10 @@ public class UserProfileResponse {
     private String identification;
     private String nameShelter;
     private String websiteUrl;
+    private boolean verified;
+    private boolean verificationRequested;
+    private String bankAccount;
+    private String bizum;
+    private String paypal;
+    private String donationMessage;
 }

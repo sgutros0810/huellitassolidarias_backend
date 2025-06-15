@@ -17,21 +17,30 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
-    Page<User> findByRole(Role role, Pageable pageable);
     Optional<User> findByUsername(String username);
+    Page<User> findByRole(Role role, Pageable pageable);
     boolean existsByUsername(String username);
     boolean existsByEmail(String email);
     boolean existsByIdentification(String identification);
     Optional<User> findByIdentification(String identification);
 
+    User findByNameShelter(String nameShelter);
 
     @Query("""
-      SELECT u FROM User u
-        WHERE u.role = 'REFUGIO'
-         AND (:nameShelter     IS NULL OR LOWER(u.nameShelter) LIKE LOWER(CONCAT('%', :nameShelter, '%')))
-         AND (:username IS NULL OR LOWER(u.username)   LIKE LOWER(CONCAT('%', :username, '%')))
-         AND (:city     IS NULL OR LOWER(u.city)       LIKE LOWER(CONCAT('%', :city, '%')))
-         AND (:country  IS NULL OR LOWER(u.country)    LIKE LOWER(CONCAT('%', :country, '%')))
-      """)
-    List<User> search(@Param("nameShelter") String nameShelter, @Param("username")String username, @Param("city") String city, @Param("country") String country);
+SELECT u FROM User u
+WHERE (:role IS NULL OR u.role = :role)
+AND (:verified IS NULL OR u.verified = :verified)
+AND (:verificationRequested IS NULL OR u.verificationRequested = :verificationRequested)
+AND (:active IS NULL OR u.active = :active)
+AND (:search IS NULL OR LOWER(u.username) LIKE LOWER(CONCAT('%', :search, '%')) OR LOWER(u.email) LIKE LOWER(CONCAT('%', :search, '%')))
+""")
+    Page<User> findAllFiltered(
+            @Param("role") Role role,
+            @Param("verified") Boolean verified,
+            @Param("verificationRequested") Boolean verificationRequested,
+            @Param("active") Boolean active,
+            @Param("search") String search,
+            Pageable pageable
+    );
+
 }

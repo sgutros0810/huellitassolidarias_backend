@@ -1,6 +1,7 @@
 package com.huellitassolidarias.huellitassolidarias_backend.dto.request.auth;
 
 
+import com.huellitassolidarias.huellitassolidarias_backend.enums.City;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -30,7 +31,7 @@ public class RegisterShelterRequest {
     @NotBlank(message = "La dirección física es obligatoria")
     private String address;
 
-    private String city;
+    private City city;
 
     private String country;
 

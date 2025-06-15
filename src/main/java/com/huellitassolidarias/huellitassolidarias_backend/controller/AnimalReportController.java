@@ -44,4 +44,21 @@ public class AnimalReportController {
         return animalReportService.getReportsByState(state, pageable);
     }
 
+    @GetMapping("/myprofile")
+    public Page<AnimalReportResponse> getMyReports(
+            @AuthenticationPrincipal UserDetails userDetails,
+            Pageable pageable
+    ) {
+        return animalReportService.getMyReports(userDetails.getUsername(), pageable);
+    }
+
+    @PatchMapping("/{id}/state")
+    public void updateState(
+            @PathVariable("id") Long id,
+            @RequestParam("state") State state,
+            @AuthenticationPrincipal UserDetails userDetails
+    ) {
+        animalReportService.updateReportState(id, state, userDetails.getUsername());
+    }
+
 }

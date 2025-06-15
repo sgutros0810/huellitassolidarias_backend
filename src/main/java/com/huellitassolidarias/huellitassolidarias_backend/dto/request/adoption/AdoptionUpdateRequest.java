@@ -30,8 +30,8 @@ public class AdoptionUpdateRequest {
     @Past(message = "La fecha debe ser en el pasado")
     private LocalDate birthDate;
 
-    @Size(max = 20, message = "El tamaño debe tener como máximo 20 caracteres")
-    private String size;
+//    @Size(max = 20, message = "El tamaño debe tener como máximo 20 caracteres")
+//    private String size;
 
     @Size(max = 1000, message = "La descripción no puede superar los 1000 caracteres")
     private String description;

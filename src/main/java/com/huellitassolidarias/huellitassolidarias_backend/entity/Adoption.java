@@ -2,6 +2,7 @@ package com.huellitassolidarias.huellitassolidarias_backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.huellitassolidarias.huellitassolidarias_backend.enums.AdoptionStatus;
+import com.huellitassolidarias.huellitassolidarias_backend.enums.City;
 import com.huellitassolidarias.huellitassolidarias_backend.enums.Gender;
 import com.huellitassolidarias.huellitassolidarias_backend.enums.Species;
 import jakarta.persistence.*;
@@ -42,12 +43,13 @@ public class Adoption {
     @Past(message = "La fecha debe ser en el pasado")
     private LocalDate birthDate;
 
-    private String size;
+//    private String size;
 
     @Column(length = 1000)
     private String description;
 
-    private String location;
+    @Enumerated(EnumType.STRING)
+    private City city;
 
     private Boolean vaccinated;
 

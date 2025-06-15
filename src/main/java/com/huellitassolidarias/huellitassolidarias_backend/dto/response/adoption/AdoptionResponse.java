@@ -3,10 +3,7 @@ package com.huellitassolidarias.huellitassolidarias_backend.dto.response.adoptio
 import com.huellitassolidarias.huellitassolidarias_backend.entity.Adoption;
 import com.huellitassolidarias.huellitassolidarias_backend.entity.Post;
 import com.huellitassolidarias.huellitassolidarias_backend.entity.User;
-import com.huellitassolidarias.huellitassolidarias_backend.enums.AdoptionStatus;
-import com.huellitassolidarias.huellitassolidarias_backend.enums.Category;
-import com.huellitassolidarias.huellitassolidarias_backend.enums.Gender;
-import com.huellitassolidarias.huellitassolidarias_backend.enums.Species;
+import com.huellitassolidarias.huellitassolidarias_backend.enums.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,9 +23,9 @@ public class AdoptionResponse {
     private Gender gender;
     private String breed;
     private LocalDate birthDate;
-    private String size;
+//    private String size;
     private String description;
-    private String location;
+    private City city;
     private boolean vaccinated;
     private boolean sterilized;
     private AdoptionStatus status;
@@ -45,9 +42,9 @@ public class AdoptionResponse {
         this.gender = adoption.getGender();
         this.breed = adoption.getBreed();
         this.birthDate = adoption.getBirthDate();
-        this.size = adoption.getSize();
+//        this.size = adoption.getSize();
         this.description = adoption.getDescription();
-        this.location = adoption.getLocation();
+        this.city = adoption.getCity();
         this.vaccinated = Boolean.TRUE.equals(adoption.getVaccinated());
         this.sterilized = Boolean.TRUE.equals(adoption.getSterilized());
         this.status = adoption.getStatus();

@@ -11,6 +11,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,16 +37,26 @@ public class ShelterController {
         return ResponseEntity.ok(adoptions);
     }
 
-
-    @GetMapping("/search")
-    public ResponseEntity<List<SheltersResponse>> searchShelters(
-            @RequestParam(required = false) String name,
-            @RequestParam(required = false) String username,
-            @RequestParam(required = false) String city,
-            @RequestParam(required = false) String country
-    ) {
-        List<SheltersResponse> results = userService
-                .searchShelters(name, username, city, country);
-        return ResponseEntity.ok(results);
+    @PutMapping("/request-verification")
+    @PreAuthorize("hasRole('REFUGIO')")
+    public ResponseEntity<Void> requestVerification(Authentication authentication) {
+        String email = authentication.getName();
+        userService.requestShelterVerification(email);
+        return ResponseEntity.noContent().build();
     }
+
+
+
+
+    //    @GetMapping("/search")
+//    public ResponseEntity<List<SheltersResponse>> searchShelters(
+//            @RequestParam(required = false) String name,
+//            @RequestParam(required = false) String username,
+//            @RequestParam(required = false) String city,
+//            @RequestParam(required = false) String country
+//    ) {
+//        List<SheltersResponse> results = userService
+//                .searchShelters(name, username, city, country);
+//        return ResponseEntity.ok(results);
+//    }
 }

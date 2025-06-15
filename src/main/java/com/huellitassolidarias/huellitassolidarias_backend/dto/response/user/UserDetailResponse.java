@@ -1,6 +1,7 @@
 package com.huellitassolidarias.huellitassolidarias_backend.dto.response.user;
 
 import com.huellitassolidarias.huellitassolidarias_backend.entity.User;
+import com.huellitassolidarias.huellitassolidarias_backend.enums.City;
 import lombok.*;
 
 @Getter
@@ -16,7 +17,7 @@ public class UserDetailResponse {
     private String identification;
     private String nameShelter;
     private String address;
-    private String city;
+    private City city;
     private String country;
     private String websiteUrl;
     private String profileImageUrl;

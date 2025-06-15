@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class PostMapper {
 
-    // Crea la entidad Post a partir de los datos del DTO y la imagen subida.
     public Post toEntity(PostUpdateRequest dto, User user, String imageUrl) {
         return Post.builder()
                 .title(dto.getTitle())
@@ -34,7 +33,6 @@ public class PostMapper {
         if (imageUrl != null) {
             post.setImageUrl(imageUrl);
         }
-//        // Actualiza la fecha si quieres reflejar la edición:
 //        post.setCreatedAt(postRequest);
     }
 
@@ -47,9 +45,10 @@ public class PostMapper {
                 post.getContent(),
                 post.getImageUrl(),
                 post.getCreatedAt(),
-                post.getUser().getId(),
-                post.getUser().getUsername()  // o el campo que uses para el autor
+                post.getUser().getProfileImageUrl(),
+                post.getUser().getUsername()
         );
     }
+
 
 }

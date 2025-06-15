@@ -10,7 +10,10 @@ import com.huellitassolidarias.huellitassolidarias_backend.repository.PostReposi
 
 import com.huellitassolidarias.huellitassolidarias_backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -43,6 +46,13 @@ public class PostService {
         post.setImageUrl(imageUrl);
         post.setCategory(category);
         postRepository.save(post);
+    }
+
+    public Page<PostResponse> listAllPosts(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+        return postRepository
+                .findAll(pageable)
+                .map(PostResponse::new);
     }
 
     public String saveImage (MultipartFile image) throws IOException {

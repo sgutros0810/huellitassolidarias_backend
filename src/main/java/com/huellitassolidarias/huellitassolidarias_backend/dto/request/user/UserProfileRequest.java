@@ -1,5 +1,6 @@
 package com.huellitassolidarias.huellitassolidarias_backend.dto.request.user;
 
+import com.huellitassolidarias.huellitassolidarias_backend.enums.City;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +12,7 @@ public class UserProfileRequest {
     private String email;
     private String address;
     private String phoneNumber;
-    private String city;
+    private City city;
     private String country;
 
 //    private String nameShelter;

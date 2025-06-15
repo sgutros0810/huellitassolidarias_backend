@@ -11,6 +11,7 @@ import com.huellitassolidarias.huellitassolidarias_backend.security.UserDetailsA
 import com.huellitassolidarias.huellitassolidarias_backend.service.impl.PostService;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -113,12 +114,11 @@ public class PostController {
 
 
     @GetMapping
-    public ResponseEntity<List <PostResponse>> getAllPosts(
-        @RequestParam(defaultValue = "0") int page,
-        @RequestParam(defaultValue = "10") int size
-    ){
-        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
-        List <PostResponse> posts = postRepository.findAll(pageable).map(PostResponse::new).toList();
+    public ResponseEntity<Page<PostResponse>> getAllPosts(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        Page<PostResponse> posts = postService.listAllPosts(page, size);
         return ResponseEntity.ok(posts);
     }
 }

@@ -5,6 +5,7 @@ import com.huellitassolidarias.huellitassolidarias_backend.dto.request.user.Shel
 import com.huellitassolidarias.huellitassolidarias_backend.dto.request.user.UserProfileRequest;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.response.adoption.AdoptionResponse;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.response.user.ShelterDetailResponse;
+import com.huellitassolidarias.huellitassolidarias_backend.dto.response.user.SheltersResponse;
 import com.huellitassolidarias.huellitassolidarias_backend.dto.response.user.UserProfileResponse;
 import com.huellitassolidarias.huellitassolidarias_backend.entity.User;
 import com.huellitassolidarias.huellitassolidarias_backend.enums.Role;
@@ -29,6 +30,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -90,20 +93,35 @@ public class UserController {
         user.setProfileImageUrl(imageUrl);
 
         userRepository.save(user);
-        return ResponseEntity.ok().body(imageUrl);
+        return ResponseEntity.ok().body(Map.of("imageUrl", imageUrl));
     }
 
 
 
     // TOdos los refugios
     @GetMapping("/shelters")
-    public ResponseEntity<Page<SheltersRequest>> getAllShelters(
+    public ResponseEntity<Page<SheltersResponse>> getAllShelters(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
     ) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<SheltersRequest> shelters = userRepository.findByRole(Role.REFUGIO, pageable)
-                .map(SheltersRequest::new);
+        Page<SheltersResponse> shelters = userRepository.findByRole(Role.REFUGIO, pageable)
+                .map(SheltersResponse::new);
+
+        return ResponseEntity.ok(shelters);
+    }
+
+    @GetMapping("/shelters/search")
+    public ResponseEntity<List<SheltersResponse>> searchShelters(
+            @RequestParam(required = false) String nameShelter,
+            @RequestParam(required = false) String username,
+            @RequestParam(required = false) String city,
+            @RequestParam(required = false) String country
+    ) {
+        var shelters = userService.searchShelters(nameShelter, username, city, country)
+                .stream()
+                .map(SheltersResponse::new)
+                .toList();
 
         return ResponseEntity.ok(shelters);
     }

@@ -14,9 +14,11 @@ public class AnimalReportResponse {
     private String description;
     private String location;
     private LocalDateTime reportDate;
-    private String image;
+    private String imageUrl;
     private String state;
     private String username;
+    private String contactName;
+    private String contactPhone;
 
     public AnimalReportResponse(AnimalReport report) {
         this.id = report.getId();
@@ -24,8 +26,10 @@ public class AnimalReportResponse {
         this.description = report.getDescription();
         this.location = report.getLocation();
         this.reportDate = report.getReportDate();
-        this.image = report.getImageUrl();
+        this.imageUrl = report.getImageUrl();
         this.state = report.getState().toString();
         this.username = report.getUser().getUsername();
+        this.contactName = report.getContactName();
+        this.contactPhone = report.getContactPhone();
     }
 }

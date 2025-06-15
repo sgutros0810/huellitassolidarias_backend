@@ -2,6 +2,7 @@ package com.huellitassolidarias.huellitassolidarias_backend.dto.response.adoptio
 
 import com.huellitassolidarias.huellitassolidarias_backend.dto.response.user.UserDetailResponse;
 import com.huellitassolidarias.huellitassolidarias_backend.entity.Adoption;
+import com.huellitassolidarias.huellitassolidarias_backend.enums.City;
 import lombok.*;
 
 @Getter
@@ -16,9 +17,9 @@ public class AdoptionDetailResponse {
     private String gender;
     private String breed;
     private String birthDate;      // Puedes usar String o LocalDate según convenga
-    private String size;
+//    private String size;
     private String description;
-    private String location;
+    private City city;
     private Boolean vaccinated;
     private Boolean sterilized;
     private String status;         // Por ejemplo, AdoptionStatus como String
@@ -35,9 +36,9 @@ public class AdoptionDetailResponse {
         this.gender = adoption.getGender().toString();
         this.breed = adoption.getBreed();
         this.birthDate = adoption.getBirthDate().toString(); // o formatear si LocalDate
-        this.size = adoption.getSize();
+//        this.size = adoption.getSize();
         this.description = adoption.getDescription();
-        this.location = adoption.getLocation();
+        this.city = adoption.getCity();
         this.vaccinated = adoption.getVaccinated();
         this.sterilized = adoption.getSterilized();
         this.status = adoption.getStatus().toString();
